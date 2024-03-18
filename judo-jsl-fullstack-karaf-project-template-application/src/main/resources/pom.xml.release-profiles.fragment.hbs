@@ -1,0 +1,13 @@
+<profile>
+    <id>release-dummy</id>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>dummy-distribution</id>
+            <url>file:///tmp/${project.groupId}-${project.artifactId}-${project.version}/maven-snapshot/</url>
+        </snapshotRepository>
+        <repository>
+            <id>dummy-distribution</id>
+            <url>file:///tmp/${project.groupId}-${project.artifactId}-${project.version}/maven-release/</url>
+        </repository>
+    </distributionManagement>
+</profile>

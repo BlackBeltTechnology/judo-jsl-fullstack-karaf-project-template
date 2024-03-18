@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features name="judo-platform-${project.version}"
+    xmlns="http://karaf.apache.org/xmlns/features/v1.5.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.5.0 http://karaf.apache.org/xmlns/features/v1.5.0">
+
+    <repository>mvn:hu.blackbelt.judo.platform/judo-platform-karaf-features/${judo-platform-version}/xml/features</repository>
+    <repository>mvn:hu.blackbelt.judo.platform/judo-platform-sdk-karaf-features/${judo-platform-version}/xml/features</repository>
+    {{> karaf-features/src/main/feature/feature.xml.extra-repositories.fragment.hbs }}
+
+    <feature name="{{ lowerCase model.name }}{{ projectPostfix }}-judo-platform-prototype" version="${project.version}" description="JUDO Platform - {{ lowerCase model.name }}{{ projectPostfix }}" install="false">
+        <feature>judo-platform-default-sdk</feature>
+
+        <bundle>mvn:org.apache.tika/tika-core/1.19.1</bundle>
+        <bundle>mvn:org.apache.tika/tika-parsers/1.19.1</bundle>
+        <bundle>mvn:org.apache.pdfbox/pdfbox/2.0.13</bundle>
+        <bundle>mvn:org.apache.pdfbox/fontbox/2.0.13</bundle>
+        <bundle>mvn:org.apache.pdfbox/jempbox/1.8.16</bundle>
+
+        <bundle>mvn:org.json/json/20170516</bundle>
+        <bundle>mvn:org.apache.sling/org.apache.sling.commons.johnzon/1.1.2</bundle>
+        <bundle>mvn:org.apache.sling/org.apache.sling.commons.mime/2.2.2</bundle>
+        <bundle>mvn:org.apache.sling/org.apache.sling.commons.osgi/2.4.2</bundle>
+
+        {{> karaf-features/src/main/feature/feature.xml.extra-bundles.fragment.hbs }}
+
+        {{> karaf-features/src/main/feature/feature.xml.model-bundles.fragment.hbs }}
+
+    </feature>
+
+</features>

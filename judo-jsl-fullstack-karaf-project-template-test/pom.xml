@@ -1,0 +1,382 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+	<parent>
+    	<groupId>hu.blackbelt.judo.template</groupId>
+	    <artifactId>judo-jsl-fullstack-karaf-project-template-parent</artifactId>
+    	<version>${revision}</version>
+	</parent>
+    <artifactId>judo-jsl-fullstack-karaf-project-template-test</artifactId>
+    <packaging>bundle</packaging>
+
+    <name>JUDO JSL Fullstack Karaf Project Template Test</name>
+    <description>JUDO JSL Fullstack Karaf Project Template Test. Helps create project skeletons.</description>
+
+    <properties>
+
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>hu.blackbelt.judo</groupId>
+                <artifactId>judo-version-updater-maven-plugin</artifactId>
+                <version>${judo-version-updater-maven-plugin-version}</version>
+                <executions>
+                    <execution>
+                        <id>update-judo-versions</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>update-judo-versions</goal>
+                        </goals>
+                        <configuration>
+                        	<versionsProperties>${basedir}/target/test-classes/jsl/root/judo-version.properties</versionsProperties>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>hu.blackbelt.judo.meta</groupId>
+                <artifactId>judo-jsl-generator-maven-plugin</artifactId>
+                <version>${judo-meta-jsl-version}</version>
+                <configuration>
+                    <contextAccessor>hu.blackbelt.judo.jsl.fullstack.karaf.project.archetype.StoredVariableHelper</contextAccessor>
+                    <sources>${basedir}/target/test-classes/jsl/root/src/main/model</sources>
+
+                    <templateParameters>
+                        <artifactId>${project.artifactId}.itest.test</artifactId>
+                        <type>fullstack-project</type>
+                        <groupId>${project.groupId}</groupId>
+                        <version>${project.version}</version>
+                        <projectPostfix>-application</projectPostfix>
+
+                        <modelGroupId>hu.blackbelt.judo.tatami</modelGroupId>
+                        <modelArtifactId>${project.artifactId}-jsl</modelArtifactId>
+                        <modelVersion>${judo-tatami-jsl-version}</modelVersion>
+
+                        <sqlDialects>hsqldb</sqlDialects>
+                        <ignoreOpenAPI>true</ignoreOpenAPI>
+                        <validateModels>false</validateModels>
+
+                        <structuredMapProxyVersion>${structured-map-proxy-version}</structuredMapProxyVersion>
+                        <judoDaoApiVersion>${judo-dao-api-version}</judoDaoApiVersion>
+                        <judoDispatcherApiVersion>${judo-dispatcher-api-version}</judoDispatcherApiVersion>
+                        <judoSdkCommonVersion>${judo-sdk-common-version}</judoSdkCommonVersion>
+                        <mapperVersion>${mapper-version}</mapperVersion>
+
+                        <judoTatamiJslVersion>${judo-tatami-jsl-version}</judoTatamiJslVersion>
+                        <judoPlatformVersion>${judo-platform-version}</judoPlatformVersion>
+                        <judoServicesVersion>${judo-services-version}</judoServicesVersion>
+                        <judoRdbmsSchemaVersion>${judo-rdbms-schema-version}</judoRdbmsSchemaVersion>
+                        <judoTatamiClientVersion>${judo-tatami-client-version}</judoTatamiClientVersion>
+
+                        <judoMetaUIVersion>${judo-meta-ui-version}</judoMetaUIVersion>
+                        <judoUiTypescriptRestTemplateVersion>${judo-ui-typescript-rest-template-version}</judoUiTypescriptRestTemplateVersion>
+                        <judoUiReactTemplateVersion>${judo-ui-react-template-version}</judoUiReactTemplateVersion>
+                        <frontendType>${frontendType}</frontendType>
+                        <javaCompiler>ecj</javaCompiler>
+
+                    </templateParameters>
+
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <id>create-test-model</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>create</goal>
+                        </goals>
+
+                        <configuration>
+                            <uris>
+                                <uri>mvn:hu.blackbelt.judo.template:judo-jsl-fullstack-karaf-project-template-common:${project.version}</uri>
+                            </uris>
+                            <type>fullstack-project</type>
+                            <modelDirectory>${basedir}/target/test-classes/jsl/root/src/main/model</modelDirectory>
+                            <modelName>Test</modelName>
+                            <destination>${basedir}/target/test-classes/jsl/root</destination>
+                            <groupId>${project.groupId}</groupId>
+                            <version>${project.version}</version>
+                        </configuration>
+                    </execution>
+
+
+                    <execution>
+                        <id>execute-jsl-test-model-root</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <uris>
+                                <uri>mvn:hu.blackbelt.judo.template:judo-jsl-fullstack-karaf-project-template-root:${project.version}</uri>
+                            </uris>
+                            <type>fullstack-project</type>
+                            <destination>${basedir}/target/test-classes/jsl/root</destination>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>execute-jsl-test-model-aplication</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <uris>
+                                <uri>mvn:hu.blackbelt.judo.template:judo-jsl-fullstack-karaf-project-template-common:${project.version}</uri>
+                                <uri>mvn:hu.blackbelt.judo.template:judo-jsl-fullstack-karaf-project-template-application:${project.version}</uri>
+                            </uris>
+                            <type>fullstack-project</type>
+                            <destination>${basedir}/target/test-classes/jsl/root/application</destination>
+                            <contextAccessor>hu.blackbelt.judo.jsl.fullstack.karaf.project.archetype.StoredVariableHelper</contextAccessor>
+                            <templateParameters>
+                                <artifactId>${project.artifactId}.itest.northwind</artifactId>
+                                <groupId>${project.groupId}</groupId>
+                                <version>${project.version}</version>
+
+                                <modelGroupId>hu.blackbelt.judo.tatami</modelGroupId>
+                                <modelVersion>${judo-tatami-jsl-version}</modelVersion>
+                                <projectPostfix>-application</projectPostfix>
+
+                                <sqlDialects>hsqldb</sqlDialects>
+                                <ignoreOpenAPI>true</ignoreOpenAPI>
+                                <validateModels>false</validateModels>
+
+                                <structuredMapProxyVersion>${structured-map-proxy-version}</structuredMapProxyVersion>
+                                <judoDaoApiVersion>${judo-dao-api-version}</judoDaoApiVersion>
+                                <judoDispatcherApiVersion>${judo-dispatcher-api-version}</judoDispatcherApiVersion>
+                                <judoSdkCommonVersion>${judo-sdk-common-version}</judoSdkCommonVersion>
+                                <mapperVersion>${mapper-version}</mapperVersion>
+
+                                <judoTatamiJslVersion>${judo-tatami-jsl-version}</judoTatamiJslVersion>
+                                <judoPlatformVersion>${judo-platform-version}</judoPlatformVersion>
+                                <judoServicesVersion>${judo-services-version}</judoServicesVersion>
+                                <judoRdbmsSchemaVersion>${judo-rdbms-schema-version}</judoRdbmsSchemaVersion>
+                                <judoTatamiClientVersion>${judo-tatami-client-version}</judoTatamiClientVersion>
+
+                                <judoMetaUIVersion>${judo-meta-ui-version}</judoMetaUIVersion>
+                                <judoUiTypescriptRestTemplateVersion>${judo-ui-typescript-rest-template-version}</judoUiTypescriptRestTemplateVersion>
+                                <judoUiReactTemplateVersion>${judo-ui-react-template-version}</judoUiReactTemplateVersion>
+                                <frontendType>${frontendType}</frontendType>
+                                <javaCompiler>ecj</javaCompiler>
+
+                            </templateParameters>
+                        </configuration>
+                    </execution>
+                </executions>
+
+            </plugin>
+
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-verifier-plugin</artifactId>
+                <version>1.1</version>
+                <configuration>
+                    <verificationFile>src/test/verifier/verification.xml</verificationFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>verify-files</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>hu.blackbelt.judo.template</groupId>
+            <artifactId>judo-jsl-fullstack-karaf-project-template-root</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>hu.blackbelt.judo.template</groupId>
+            <artifactId>judo-jsl-fullstack-karaf-project-template-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>hu.blackbelt.judo.template</groupId>
+            <artifactId>judo-jsl-fullstack-karaf-project-template-application</artifactId>
+        </dependency>
+
+    </dependencies>
+
+
+    <profiles>
+        <!--
+
+            <profile>
+                <id>update-judo-versions</id>
+                <activation>
+                    <property>
+                        <name>!skipJudoVersions</name>
+                    </property>
+                </activation>
+
+                <build>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>versions-maven-plugin</artifactId>
+                            <version>2.15.0</version>
+                            <executions>
+                                <execution>
+                                    <id>update-version-properties</id>
+                                    <phase>validate</phase>
+                                    <goals>
+                                        <goal>update-properties</goal>
+                                    </goals>
+                                    <configuration>
+                                        <properties>
+                                            <property>
+                                                <name>judo-version</name>
+                                                <dependencies>
+                                                    <dependency>
+                                                        <groupId>hu.blackbelt.judo</groupId>
+                                                        <artifactId>judo-versions</artifactId>
+                                                    </dependency>
+                                                </dependencies>
+                                            </property>
+                                        </properties>
+                                    </configuration>
+                                </execution>
+                            </executions>
+
+                            <configuration>
+                                <allowMajorUpdates>true</allowMajorUpdates>
+                                <allowMinorUpdates>true</allowMinorUpdates>
+                                <allowIncrementalUpdates>true</allowIncrementalUpdates>
+                                <generateBackupPoms>false</generateBackupPoms>
+
+                                <rulesUri>https://nexus.judo.technology/repository/judo-versions/version-ruleset-${judo-channel}.xml</rulesUri>
+                                <includes>
+                                    <include>hu.blackbelt.judo:judo-versions</include>
+                                </includes>
+                            </configuration>
+                        </plugin>
+
+
+                        <plugin>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>properties-maven-plugin</artifactId>
+                            <version>1.2.0</version>
+                            <executions>
+                                <execution>
+                                    <id>read-versions-properties-from-judo-versions</id>
+                                    <phase>initialize</phase>
+                                    <goals>
+                                        <goal>read-project-properties</goal>
+                                    </goals>
+                                    <configuration>
+                                        <urls>
+                                            <url>classpath:versions.properties</url>
+                                        </urls>
+                                    </configuration>
+                                </execution>
+
+                                <execution>
+                                    <id>write-judo-properties</id>
+                                    <phase>validate</phase>
+                                    <goals>
+                                        <goal>write-project-properties</goal>
+                                    </goals>
+                                    <configuration>
+                                        <outputFile>${basedir}/target/test-classes/jsl/artifact/judo-model.properties</outputFile>
+                                    </configuration>
+                                </execution>
+                            </executions>
+
+                            <dependencies>
+                                <dependency>
+                                    <groupId>hu.blackbelt.judo</groupId>
+                                    <artifactId>judo-versions</artifactId>
+                                    <version>${judo-version}</version>
+                                </dependency>
+                            </dependencies>
+                        </plugin>
+
+                    </plugins>
+                </build>
+            </profile>
+            -->
+
+        <profile>
+            <id>generatorTest</id>
+            <activation>
+                <property>
+                    <name>skipGeneratorTest</name>
+                    <value>!true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <!--
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-invoker-plugin</artifactId>
+                        <version>3.6.0</version>
+                        <configuration>
+                            <projectsDirectory>${generatedProjectDirectory}</projectsDirectory>
+                            <cloneProjectsTo>${integrationTestDirectory}</cloneProjectsTo>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>integration-test</id>
+                                <goals>
+                                    <goal>install</goal>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    -->
+                    <!--
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-invoker-plugin</artifactId>
+                        <version>3.6.0</version>
+                        <configuration>
+                            <pom>${basedir}/target/test-classes/jsl/artifact/pom.xml</pom>
+                            <pomIncludes>
+                                <pomInclude>
+                                    ${basedir}/target/test-classes/jsl/artifact/pom.xml
+                                </pomInclude>
+                            </pomIncludes>
+                            <streamLogs>true</streamLogs>
+                            <goals>
+                                <goal>clean</goal>
+                                <goal>package</goal>
+                            </goals>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>build-module</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.codehaus.groovy</groupId>
+                                <artifactId>groovy</artifactId>
+                                <version>1.8.3</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                    -->
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

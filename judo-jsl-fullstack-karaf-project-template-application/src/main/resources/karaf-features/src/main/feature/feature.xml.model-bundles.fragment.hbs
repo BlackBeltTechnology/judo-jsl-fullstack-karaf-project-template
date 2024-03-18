@@ -1,0 +1,15 @@
+<!-- To define create 'karaf-features/src/main/feature/feature.xml.model-bundles.fragment.hbs' file -->
+<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-model/${project.version}</bundle>
+<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-model/${project.version}/jar/script2operation</bundle>
+<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-rest/${project.version}</bundle>
+<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-sdk/${project.version}</bundle>
+<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-internal/${project.version}</bundle>
+<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-app/${project.version}</bundle>
+
+{{# each actorTypes as |actorType| }}
+    {{# each (resolveFrontendType frontendType) as |frontendName| }}
+<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-frontend-{{ frontendName }}-{{ pathName actorType.fQName }}/${project.version}</bundle>
+    {{/ each }}
+{{/ each }}
+
+<!-- End of 'karaf-features/src/main/feature/feature.xml.model-bundles.fragment.hbs' -->

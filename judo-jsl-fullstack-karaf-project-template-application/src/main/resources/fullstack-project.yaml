@@ -1,0 +1,209 @@
+templates:
+
+  - name: gitignore
+    pathExpression: "'.gitignore'"
+    templateName: gitignore
+    actorTypeBased: false
+    copy: true
+
+  - name: pom.xml
+    pathExpression: "'pom.xml'"
+    templateName: pom.xml.hbs
+    actorTypeBased: false
+
+  - name: README.adoc
+    pathExpression: "'README.adoc'"
+    templateName: README.adoc.hbs
+    actorTypeBased: false
+
+  - name: generator-overrides/gitignore
+    pathExpression: "'generator-overrides/.gitignore'"
+    templateName: generator-overrides/gitignore
+    actorTypeBased: false
+    copy: true
+
+  ###############################################
+  # SDK
+  ###############################################
+
+  - name: sdk/pom.xml
+    pathExpression: "'sdk/pom.xml'"
+    templateName: sdk/pom.xml.hbs
+    actorTypeBased: false
+
+  ###############################################
+  # REST
+  ###############################################
+
+  - name: rest/pom.xml
+    pathExpression: "'rest/pom.xml'"
+    templateName: rest/pom.xml.hbs
+    actorTypeBased: false
+
+  ###############################################
+  # Internal
+  ###############################################
+
+  - name: internal/pom.xml
+    pathExpression: "'internal/pom.xml'"
+    templateName: internal/pom.xml.hbs
+    actorTypeBased: false
+
+  ###############################################
+  # app
+  ###############################################
+
+  - name: app/src/main/java/gitkeep
+    pathExpression: "'app/src/main/java/gitkeep'"
+    templateName: app/src/main/java/gitkeep
+    actorTypeBased: false
+    copy: true
+
+  - name: app/src/main/resources/gitkeep
+    pathExpression: "'app/src/main/resources/gitkeep'"
+    templateName: app/src/main/resources/gitkeep
+    actorTypeBased: false
+    copy: true
+
+  - name: app/src/test/java/gitkeep
+    pathExpression: "'app/src/test/java/gitkeep'"
+    templateName: app/src/test/java/gitkeep
+    actorTypeBased: false
+    copy: true
+
+  - name: app/src/test/resources/gitkeep
+    pathExpression: "'app/src/test/resources/gitkeep'"
+    templateName: app/src/test/resources/gitkeep
+    actorTypeBased: false
+    copy: true
+
+  - name:  app/pom.xml
+    pathExpression: "'app/pom.xml'"
+    templateName: app/pom.xml.hbs
+    actorTypeBased: false
+
+  ###############################################
+  # docker
+  ###############################################
+
+  - name: docker/pom.xml
+    pathExpression: "'docker/pom.xml'"
+    templateName: docker/pom.xml.hbs
+    actorTypeBased: false
+
+  - name: docker/src/main/resources/gitkeep
+    pathExpression: "'docker/src/main/resources/gitkeep'"
+    templateName: docker/src/main/resources/gitkeep
+    actorTypeBased: false
+    copy: true
+
+  - name: docker/overrided/bin/setenv
+    pathExpression: "'docker/overrided/bin/setenv'"
+    templateName: docker/overrided/bin/setenv
+    actorTypeBased: false
+    copy: true
+
+  - name: docker/compose-develop/docker-compose.yml
+    pathExpression: "'docker/compose-develop/docker-compose.yml'"
+    templateName: docker/compose-develop/docker-compose.yml.hbs
+    actorTypeBased: false
+
+  - name: docker/compose-postgresql-https/docker-compose.yml
+    pathExpression: "'docker/compose-postgresql-https/docker-compose.yml'"
+    templateName: docker/compose-postgresql-https/docker-compose.yml.hbs
+    actorTypeBased: false
+
+  - name: docker/compose-postgresql-https/tls.yml
+    pathExpression: "'docker/compose-postgresql-https/tls.yml'"
+    templateName: docker/compose-postgresql-https/tls.yml
+    actorTypeBased: false
+    copy: true
+
+  - name: docker/compose-postgresql-https/traefik.yml
+    pathExpression: "'docker/compose-postgresql-https/traefik.yml'"
+    templateName: docker/compose-postgresql-https/traefik.yml
+    actorTypeBased: false
+    copy: true
+
+  ###############################################
+  # karaf-features
+  ###############################################
+
+  - name: karaf-features/pom.xml
+    pathExpression: "'karaf-features/pom.xml'"
+    templateName: karaf-features/pom.xml.hbs
+    actorTypeBased: false
+
+  - name: karaf-features/src/main/feature/feature.xml
+    pathExpression: "'karaf-features/src/main/feature/feature.xml'"
+    templateName: karaf-features/src/main/feature/feature.xml.hbs
+    actorTypeBased: false
+
+  ###############################################
+  # karaf-offline
+  ###############################################
+
+  - name: karaf-offline/pom.xml
+    pathExpression: "'karaf-offline/pom.xml'"
+    templateName: karaf-offline/pom.xml.hbs
+    actorTypeBased: false
+
+  ###############################################
+  # model
+  ###############################################
+
+  - name: model/pom.xml
+    pathExpression: "'model/pom.xml'"
+    templateName: model/pom.xml.hbs
+    actorTypeBased: false
+
+  ###############################################
+  # schema
+  ###############################################
+
+  - name: schema/pom.xml
+    pathExpression: "'schema/pom.xml'"
+    templateName: schema/pom.xml.hbs
+    actorTypeBased: false
+
+  - name: schema/README.adoc
+    pathExpression: "'schema/README.adoc'"
+    templateName: schema/README.adoc.hbs
+    actorTypeBased: false
+
+  - name: schema/migration/gitkeep
+    pathExpression: "'schema/migration/gitkeep'"
+    templateName: schema/migration/gitkeep
+    actorTypeBased: false
+    copy: true
+
+  ###############################################
+  # frontend - react
+  ###############################################
+
+  - name: frontend-react/gitignore
+    pathExpression: "'frontend-react/.gitignore'"
+    templateName: frontend-react/gitignore
+    actorTypeBased: false
+    copy: true
+
+  - name: frontend-react/pom.xml
+    pathExpression: "'frontend-react/pom.xml'"
+    templateName: frontend-react/pom.xml.hbs
+    actorTypeBased: false
+
+  - name: frontend-react/actor/pom.xml
+    pathExpression: "'frontend-react/' + #pathName(#fQName(#actorType)) + '/pom.xml'"
+    templateName: frontend-react/actor/pom.xml.hbs
+    actorTypeBased: true
+
+  - name: frontend-react/model/pom.xml
+    pathExpression: "'frontend-react/model/pom.xml'"
+    templateName: frontend-react/model/pom.xml.hbs
+    actorTypeBased: false
+
+  - name: frontend-react/README.adoc
+    pathExpression: "'frontend-react/README.adoc'"
+    templateName: frontend-react/README.adoc.hbs
+    actorTypeBased: false
+

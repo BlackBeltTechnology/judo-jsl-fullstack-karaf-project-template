@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}</artifactId>
+        <groupId>{{ groupId }}</groupId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-model</artifactId>
+
+    <name>{{ model.name }} transformed models</name>
+    <description>{{ model.name }} transformed models</description>
+
+    <packaging>bundle</packaging>
+
+    <build>
+        <plugins>
+            <!--
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/target/generated-resources/model</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/target/generated-resources/model</directory>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/*.model</include>
+                                        <include>**/*.yaml</include>
+                                        <include>**/*.json</include>
+                                        <include>**/*.changelog.xml</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Judo-Models>name=${model-name};version=${model-version}</Judo-Models>
+                        <Include-Resource>
+                            {maven-resources},
+                            /model=${basedir}/target/generated-resources/model
+                        </Include-Resource>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <profiles>
+        <profile>
+            <id>create-models</id>
+            <activation>
+                <property>
+                    <name>!skipModels</name>
+                </property>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>hu.blackbelt.judo.tatami</groupId>
+                        <artifactId>judo-tatami-jsl-workflow-maven-plugin</artifactId>
+                        <version>${judo-tatami-jsl-version}</version>
+                        <executions>
+                            <execution>
+                                <id>transform-jsl-file</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>default-model-workflow</goal>
+                                </goals>
+                                <configuration>
+                                    <!--
+                                    <jslModel>{{# if jslModel }}{{ jslModel }}{{ else }}${maven.multiModuleProjectDirectory}/target/clasees/model/${model-name}-jsl.model{{/ if}}</jslModel>
+                                    -->
+                                    <sources>{{# if modelDirectory }}{{ modelDirectory }}{{ else }}${maven.multiModuleProjectDirectory}/src/main/model{{/ if}}</sources>
+                                    <modelVersion>${model-version}</modelVersion>
+                                    <destination>${project.basedir}/target/generated-resources/model</destination>
+                                    <dialectList>${dialectList}</dialectList>
+                                    <validateModels>${validateModels}</validateModels>
+                                    <useCache>${useCache}</useCache>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
