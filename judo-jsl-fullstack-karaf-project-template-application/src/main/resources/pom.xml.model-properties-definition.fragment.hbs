@@ -1,0 +1,13 @@
+<!-- To redifine create 'pom.xml.model-properties-definition.fragment.hbs' override file -->
+<model-groupId>{{ modelGroupId }}</model-groupId>
+<model-artifactId>{{ modelArtifactId }}</model-artifactId>
+<model-name>{{ model.name }}</model-name>
+<model-version>${project.version}</model-version>
+
+<dialectList>{{# if sqlDialects }}{{ sqlDialects }}{{ else }}hsqldb{{/ if}}</dialectList>
+<ignoreOpenapi>{{# if ignoreOpenAPI }}{{ ignoreOpenAPI }}{{ else }}true{{/ if}}</ignoreOpenapi>
+<validateModels>{{# if validateModels }}{{ validateModels }}{{ else }}false{{/ if}}</validateModels>
+<useCache>{{# if useCache }}{{ useCache }}{{ else }}true{{/ if}}</useCache>
+<validateChecksum>true</validateChecksum>
+<karafOfflineZip>true</karafOfflineZip>
+<!-- End of 'pom.xml.model-properties-definition.fragment.hbs' -->

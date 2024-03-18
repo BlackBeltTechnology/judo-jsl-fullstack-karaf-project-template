@@ -1,0 +1,12 @@
+<!-- To redefine create 'frontend-react/pom.xml.project-definition.fragment.hbs' file -->
+<parent>
+    <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}</artifactId>
+    <groupId>{{ groupId }}</groupId>
+    <version>${revision}</version>
+</parent>
+<artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-frontend-react</artifactId>
+
+<name>{{  model.name }} frontend react reactor</name>
+<description>{{ model.name }} frontend react reactor in {{ model.name }}{{ projectPostfix }}</description>
+
+<!-- End of 'frontend-react/pom.xml.project-definition.fragment.hbs' -->
