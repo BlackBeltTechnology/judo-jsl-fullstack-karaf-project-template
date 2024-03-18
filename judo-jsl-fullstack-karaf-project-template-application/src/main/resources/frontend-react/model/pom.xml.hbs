@@ -8,39 +8,6 @@
 
     <build>
         <plugins>
-        <!--
-            <plugin>
-                <groupId>hu.blackbelt</groupId>
-                <artifactId>unpack-artifact-maven-plugin</artifactId>
-                <version>1.0.0</version>
-                <executions>
-                    <execution>
-                        <id>copy-files-from-jar</id>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-
-                        <configuration>
-                            <outDirectory>${basedir}/src/main</outDirectory>
-                            <artifacts>
-                                <artifact>
-                                    <groupId>{{ groupId }}</groupId>
-                                    <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-model</artifactId>
-                                    <version>${project.version}</version>
-                                    <resources>
-                                        <resource>
-                                            <source>model/${model-name}-ui.model</source>
-                                            <destination>${basedir}</destination>
-                                        </resource>
-                                   </resources>
-                                </artifact>
-                            </artifacts>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -72,30 +39,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!--
-            <plugin>
-                <groupId>hu.blackbelt.judo.tatami</groupId>
-                <artifactId>judo-tatami-client-workflow-maven-plugin</artifactId>
-                <version>${judo-tatami-client-version}</version>
-                <executions>
-                    <execution>
-                        <id>execute-ui-transformation</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>default-workflow</goal>
-                        </goals>
-                        <configuration>
-                            <esm>{{# if esmModel }}{{ esmModel }}{{ else }}${maven.multiModuleProjectDirectory}/model/${model-name}.model{{/ if}}</esm>
-                            <destination>${basedir}</destination>
-                            <validateModels>${validateModels}</validateModels>
-                            <saveModels>true</saveModels>
-                            <useCache>${useCache}</useCache>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
         </plugins>
     </build>
 </project>

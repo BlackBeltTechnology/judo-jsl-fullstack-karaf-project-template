@@ -195,25 +195,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <!-- Report active profiles on console. -->
-            <!--
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-help-plugin</artifactId>
-                <version>3.2.0</version>
-                <executions>
-                    <execution>
-                        <id>show-profiles</id>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>active-profiles</goal>
-                        </goals>
-                        <inherited>false</inherited>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
             {{> pom.xml.extra-plugins.fragment.hbs }}
         </plugins>
     </build>

@@ -44,7 +44,7 @@ After build it can be started
 
 [source,]
 ----
-./judo.sh build
+./judo.sh start
 ----
 
 The commands can be chained:
@@ -56,7 +56,7 @@ The commands can be chained:
 
 
 === Stop the application
-After start or reckless, karaf stays, so it have to be stopped when it is not used anymore:
+After start or reckless, karaf is not terminated automatically. To stop type:
 
 [source,]
 ----
@@ -72,7 +72,7 @@ To check the running instances, use:
 ----
 
 === Reckless mode
-There are several situation when minimal change performed on model. To decrease the model-to-deploy time the reckless
+There are several situations when minimal change performed on model. To decrease the model-to-deploy time the reckless
 command can be used. It will enable caching, disabling validation to perform maximum speed. It causes sometimes
 errors. On that case it can be fixed with a `build`.
 
@@ -141,25 +141,16 @@ Sometimes maven compiling can be slow. In order to investigate what is causing p
 
 `-Dprofile -DprofileFormat=HTML`
 
-After it there will be a HTML report in `.profiler` directory.
+Using these flags, maven will generate a HTML report in the `.profiler` directory.
 
 == Layout
 
 === `model`
 
 The model project.
-It creates the intermediate models from PSM model and stores in `/model/target/generated-resources/model/` directory.
+It creates the intermediate models from JSL model and stores in `/model/target/generated-resources/model/` directory.
 This model is packed as OSGi bundle which is used the JUDO runtime.
-It also attach 4 OSGi bundles:
-
-- `script2operation.jar`
-+
-The generated Java representation of scripts as OSGi services
-
-- `asm2jaxrsapi.jar`
-+
-CXF based JaxRS implementation which delegates operations as REST.
-It is the server side definitions of OpenAPI specified functions.
+It also attach am OSGi bundles:
 
 === `schema`
 
@@ -191,7 +182,7 @@ It aggregates bundle definitions and configurations for the backend service in `
 === `karaf-offline`
 
 The assembled karaf service which can be deployed.
-The `run-offline.sh` script running it.
+We can use the `run-offline.sh` script to run it
 
 === `docker`
 
@@ -204,12 +195,13 @@ mvn clean install -DcreateDocker
 
 == Run service
 
-After the compilation every artifact is created to run karaf service.
-Keycloak service have to be accessed by backend.
+After the project compilation every artifact is created to be able to start karaf service.
+Keycloak service have to be accessed by backend for all apps.
 
 === Keycloak
 
-The service uses keycloak to authenticate, to be able to run, keycloak can be started before.
+By default JUDO apps integrate with keycloak in order to provide authentication and authorization features.
+Keycloak must be running in order for applications to start up.
 
 It is accessible in port 8080 by default, so in browser:
 
@@ -218,5 +210,5 @@ It is accessible in port 8080 by default, so in browser:
 
 == Settings
 
-Settings can be set up as `judo-documentation` describes.
+Settings can be set up as https://documentation.judo.technology/getting-started/introduction.html[judo-documentation] describes.
 
