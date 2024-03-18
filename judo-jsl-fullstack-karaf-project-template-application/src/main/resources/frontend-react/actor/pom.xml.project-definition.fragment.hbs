@@ -1,0 +1,10 @@
+<!-- To define project definition create 'frontend-react/actor/pom.xml.project-definition.fragment.override.hbs' file -->
+<parent>
+    <groupId>{{ groupId }}</groupId>
+    <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-frontend-react</artifactId>
+    <version>${revision}</version>
+</parent>
+<artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-frontend-react-{{ pathName actorType.fQName }}</artifactId>
+<name>{{ model.name }} - {{ actorType.name }} frontend react</name>
+<description>{{ model.name}} - {{ actorType.name }} react frontend</description>
+<!-- End of 'frontend-react/actor/pom.xml.project-definition.fragment.override.hbs' -->

@@ -1,0 +1,12 @@
+<!-- To redefine project definition create 'frontend-react/actor/pom.xml.properties-definition.fragment.override.hbs' file -->
+<model-name>{{ model.name }}</model-name>
+<actor-name>{{ actorType.name }}</actor-name>
+
+<override-dir>{{# if overrideDirectory }}{{ overrideDirectory }}{{ else }}${project.parent.basedir}/generator-overrides{{/ if }}</override-dir>
+
+{{# if appScope }}<appScope>{{ appScope }}</appScope>{{/ if }}
+<muiLicensePlan>{{# if muiLicensePlan }}{{ muiLicensePlan }}{{ else }}community{{/ if }}</muiLicensePlan>
+<appVersion>{{# if appVersion }}{{ appVersion }}{{ else }}1.0.0{{/ if }}</appVersion>
+
+
+<!-- End of 'frontend-react/actor/pom.xml.properties-definition.fragment.override.hbs' -->

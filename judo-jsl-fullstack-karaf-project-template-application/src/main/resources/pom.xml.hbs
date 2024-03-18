@@ -1,0 +1,406 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    {{> pom.xml.project-definition.fragment.hbs }}
+
+    <packaging>pom</packaging>
+
+    <properties>
+        <surefire-version>3.0.0</surefire-version>
+
+        <!--suppress UnresolvedMavenProperty -->
+        <logback-test-config>${maven.multiModuleProjectDirectory}/logback-test.xml</logback-test-config>
+
+        <slf4j-version>2.0.7</slf4j-version>
+        <karaf-version>4.4.3</karaf-version>
+
+        {{> pom.xml.model-properties-definition.fragment.hbs }}
+
+        {{> pom.xml.judo-properties-definition.fragment.hbs }}
+
+        {{> pom.xml.properties-definition.fragment.hbs }}
+
+    </properties>
+
+    <build>
+
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.2.0</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.11.0</version>
+                    {{# eq javaCompiler "ecj"}}
+                    <configuration>
+                        <compilerId>eclipse</compilerId>
+                        <source>17</source>
+                        <target>17</target>
+                        <showWarnings>false</showWarnings>
+                        <showDeprecation>false</showDeprecation>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.plexus</groupId>
+                            <artifactId>plexus-compiler-eclipse</artifactId>
+                            <version>2.12.0</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.eclipse.jdt</groupId>
+                            <artifactId>ecj</artifactId>
+                            <version>3.35.0</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.30</version>
+                        </dependency>
+                    </dependencies>
+                    {{ else javaCompiler }}
+                    <configuration>
+                        <forceJavacCompilerUse>true</forceJavacCompilerUse>
+                    </configuration>
+                    {{/ eq }}
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.3.1</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.karaf.tooling</groupId>
+                    <artifactId>karaf-maven-plugin</artifactId>
+                    <version>${karaf-version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>3.1.1</version>
+                    <configuration>
+                        <allowIncompleteProjects>true</allowIncompleteProjects>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>2.8.2</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <version>${surefire-version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>integration-test</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.felix</groupId>
+                    <artifactId>maven-bundle-plugin</artifactId>
+                    <extensions>true</extensions>
+                    <version>5.1.8</version>
+                    <configuration>
+                        <obrRepository>NONE</obrRepository>
+                        <instructions>
+                            <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+                            <Import-Package>
+                                ${osgi-default-import}, *
+                            </Import-Package>
+                            <_invalidfilenames>\$Mft|\$MftMirr|\$LogFile|\$Volume|\$AttrDef|\$Bitmap|\$Boot|\$BadClus|\$Secure|\$Upcase|\$Extend|\$Quota|\$ObjId|\$Reparse</_invalidfilenames>
+                        </instructions>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.3.0</version>
+                    <executions>
+                        <execution>
+                            <id>attach-artifacts</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>attach-artifact</goal>
+                            </goals>
+                            <configuration>
+                                <artifacts>
+                                </artifacts>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${surefire-version}</version>
+                    <configuration>
+                        <argLine>-Dfile.encoding=UTF-8</argLine>
+                        <trimStackTrace>false</trimStackTrace>
+                        <systemPropertyVariables>
+                            <logback.configurationFile>${logback-test-config}</logback.configurationFile>
+                        </systemPropertyVariables>
+                        <argLine>
+                            -Dfile.encoding=UTF-8
+                            --add-opens java.base/java.lang=ALL-UNNAMED
+                            --add-opens java.base/java.util=ALL-UNNAMED
+                            --add-opens java.base/java.time=ALL-UNNAMED
+                        </argLine>
+                    </configuration>
+                </plugin>
+                {{> pom.xml.extra-plugin-management.fragment.hbs }}
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.3.0</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                    <pomElements>
+                        <dependencies>flatten</dependencies>
+                        <repositories>flatten</repositories>
+                    </pomElements>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Report active profiles on console. -->
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-help-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>show-profiles</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>active-profiles</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+            {{> pom.xml.extra-plugins.fragment.hbs }}
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>build-model</id>
+            <activation>
+                <property>
+                    <name>!skipBackendModels</name>
+                </property>
+            </activation>
+
+            <modules>
+                <module>model</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>build-schema</id>
+            <activation>
+                <property>
+                    <name>!skipSchema</name>
+                </property>
+            </activation>
+
+            <modules>
+                <module>schema</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>build-sdk</id>
+            <activation>
+                <property>
+                    <name>!skipSDK</name>
+                </property>
+            </activation>
+
+            <modules>
+                <module>sdk</module>
+                <module>internal</module>
+                <module>app</module>
+                <module>rest</module>
+                {{> pom.xml.extra-modules.fragment.hbs }}
+            </modules>
+        </profile>
+
+        <profile>
+            <id>build-frontend-react</id>
+            <activation>
+                <property>
+                    {{# if (isReact frontendType) }}
+                        <name>!skipFrontendReact</name>
+                    {{ else }}
+                        <name>buildFrontendReact</name>
+                    {{/ if }}
+                </property>
+            </activation>
+
+            <modules>
+                <module>frontend-react</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>build-docker</id>
+            <activation>
+                <property>
+                    <name>!skipDocker</name>
+                </property>
+            </activation>
+
+            <modules>
+                <module>docker</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>build-karaf</id>
+            <activation>
+                <property>
+                    <name>!skipKaraf</name>
+                </property>
+            </activation>
+
+            <modules>
+                <module>karaf-features</module>
+                <module>karaf-offline</module>
+            </modules>
+        </profile>
+
+        <profile>
+            <id>sign-artifacts</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.simplify4u.plugins</groupId>
+                        <artifactId>sign-maven-plugin</artifactId>
+                        <version>1.0.1</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        {{> pom.xml.release-profiles.fragment.hbs }}
+
+        {{> pom.xml.extra-profiles.fragment.hbs }}
+    </profiles>
+    <repositories>
+        {{> pom.xml.repository-definition.fragment.hbs }}
+    </repositories>
+    <distributionManagement>
+        {{> pom.xml.distribution-management.fragment.hbs }}
+    </distributionManagement>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>fr.jmini.ecentral</groupId>
+                <artifactId>eclipse-platform-dependencies</artifactId>
+                <version>4.18</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>5.8.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jul-to-slf4j</artifactId>
+                <version>${slf4j-version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.2.11</version>
+            </dependency>
+            {{> pom.xml.extra-dependency-management.fragment.hbs }}
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi.core</artifactId>
+            <version>8.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi.annotation</artifactId>
+            <version>8.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.component.annotations</artifactId>
+            <version>1.5.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.namespace.service</artifactId>
+            <version>1.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>osgi.cmpn</artifactId>
+            <version>7.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+</project>

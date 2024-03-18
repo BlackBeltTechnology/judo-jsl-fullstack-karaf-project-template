@@ -1,0 +1,69 @@
+templates:
+
+  - name: gitignore
+    pathExpression: "'.gitignore'"
+    templateName: gitignore
+    actorTypeBased: false
+    copy: true
+
+  - name: generatorignore
+    pathExpression: "'.generator-ignore'"
+    templateName: generatorignore
+    actorTypeBased: false
+    copy: true
+
+  - name: sdkmanrc
+    pathExpression: "'.sdkmanrc'"
+    templateName: sdkmanrc
+    actorTypeBased: false
+    copy: true
+
+  - name: pom.xml
+    pathExpression: "'pom.xml'"
+    templateName: pom.xml.hbs
+    actorTypeBased: false
+
+  - name: README.adoc
+    pathExpression: "'README.adoc'"
+    templateName: README.adoc.hbs
+    actorTypeBased: false
+
+  - name: judo.sh
+    pathExpression: "'judo.sh'"
+    templateName: judo.sh.hbs
+    permission: rwxrwx---
+    actorTypeBased: false
+
+  - name: judo.properties
+    pathExpression: "'judo.properties'"
+    templateName: judo.properties.hbs
+    actorTypeBased: false
+
+  - name: generator-parameter.properties
+    pathExpression: "'generator-parameter.properties'"
+    templateName: generator-parameter.properties.hbs
+    actorTypeBased: false
+
+  - name: compose-dev.properties
+    pathExpression: "'compose-dev.properties'"
+    templateName: compose-dev.properties
+    actorTypeBased: false
+    copy: true
+
+  - name: compose-full.properties
+    pathExpression: "'compose-full.properties'"
+    templateName: compose-full.properties
+    actorTypeBased: false
+    copy: true
+
+  - name: jvm.config
+    pathExpression: "'.mvn/jvm.config'"
+    templateName: mvn/jvm.config
+    actorTypeBased: false
+    copy: true
+
+  - name: generator-overrides/gitignore
+    pathExpression: "'generator-overrides/.gitignore'"
+    templateName: generator-overrides/gitignore
+    actorTypeBased: false
+    copy: true

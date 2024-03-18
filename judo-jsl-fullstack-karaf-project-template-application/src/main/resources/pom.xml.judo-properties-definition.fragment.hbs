@@ -1,0 +1,26 @@
+<!-- To define create 'pom.xml.judo-properties-definition.fragment.hbs' file -->
+<structured-map-proxy-version>{{ structuredMapProxyVersion }}</structured-map-proxy-version>
+<judo-dao-api-version>{{ judoDaoApiVersion }}</judo-dao-api-version>
+<judo-dispatcher-api-version>{{ judoDispatcherApiVersion }}</judo-dispatcher-api-version>
+<judo-sdk-common-version>{{ judoSdkCommonVersion }}</judo-sdk-common-version>
+<mapper-version>{{ mapperVersion }}</mapper-version>
+
+<judo-tatami-jsl-version>{{ judoTatamiJslVersion }} </judo-tatami-jsl-version>
+<judo-platform-version>{{ judoPlatformVersion }}</judo-platform-version>
+<judo-services-version>{{ judoServicesVersion }}</judo-services-version>
+<judo-rdbms-schema-version>{{ judoRdbmsSchemaVersion }}</judo-rdbms-schema-version>
+<judo-tatami-client-version>{{ judoTatamiClientVersion }}</judo-tatami-client-version>
+
+<judo-meta-ui-version>{{ judoMetaUiVersion }}</judo-meta-ui-version>
+<judo-meta-psm-version>{{ judoMetaPsmVersion }}</judo-meta-psm-version>
+<judo-psm-generator-sdk-core-version>{{ judoPsmGeneratorSdkCoreVersion }}</judo-psm-generator-sdk-core-version>
+<judo-psm-generator-jaxrs-version>{{ judoPsmGeneratorJaxrsVersion }}</judo-psm-generator-jaxrs-version>
+<cxf-jaxrs-application-manager-version>{{ cxfJaxrsApplicationManagerVersion }}</cxf-jaxrs-application-manager-version>
+
+<osgi-default-import>
+    org.osgi.framework;version="[1.8,2.0)",
+    !lombok,
+    javax.annotation;version="[1.0,2)",
+    org.slf4j;version="[1.6,3)"
+</osgi-default-import>
+<!-- End of 'pom.xml.judo-properties-definition.fragment.hbs' -->

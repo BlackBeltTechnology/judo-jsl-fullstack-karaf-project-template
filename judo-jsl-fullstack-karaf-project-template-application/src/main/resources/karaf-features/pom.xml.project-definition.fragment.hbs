@@ -1,0 +1,11 @@
+<!-- To define create 'karaf-features/pom.xml.project-definition.fragment.hbs' file -->
+<parent>
+    <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}</artifactId>
+    <groupId>{{ groupId }}</groupId>
+    <version>${revision}</version>
+</parent>
+
+<artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-karaf-features</artifactId>
+<name>{{ model.name }} karaf features</name>
+<description>{{ model.name }} karaf features</description>
+<!-- End of karaf-features/pom.xml.project-definition.fragment.hbs -->
