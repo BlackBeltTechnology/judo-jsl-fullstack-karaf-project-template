@@ -1,0 +1,10 @@
+<!-- To redefine project definition create 'frontend-react/model/pom.xml.project-definition.fragment.override.hbs' file -->
+<parent>
+    <groupId>{{ groupId }}</groupId>
+    <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-frontend-react</artifactId>
+    <version>${revision}</version>
+</parent>
+<artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-frontend-react-model</artifactId>
+<name>{{ model.name}} - frontend react model</name>
+<description>{{ model.name}} - frontend react model</description>
+<!-- End of 'frontend-react/model/pom.xml.project-definition.fragment.override.hbs' -->

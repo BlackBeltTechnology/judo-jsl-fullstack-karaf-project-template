@@ -1,0 +1,152 @@
+# judo-jsl-fullstack-karaf-project-template
+
+JSL based JUDO karaf backend / frontend project archetype
+
+It can be used as:
+
+[code, xml]
+----
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>hu.blackbelt.judo.template</groupId>
+    <artifactId>judo-jsl-fullstack-karaf-project-template-example</artifactId>
+    <version>${revision}</version>
+    <packaging>pom</packaging>
+
+    <name>JUDO JSL Generator test</name>
+    <description>JUDO JSL Fullstack Karaf Project Archetype Example.</description>
+
+    <properties>
+        <revision>1.0.0-SNAPSHOT</revision>
+        <maven>3.9.4</maven>
+
+        <slf4j-version>2.0.7</slf4j-version>
+        <log4j.configuration>log4j.properties</log4j.configuration>
+
+        <judo-meta-jsl-version>1.0.0.20221123_203333_b8ff8102_develop</judo-meta-jsl-version>
+        <judo-tatami-jsl-version>1.1.0.20221130_232047_4e092061_develop</judo-tatami-jsl-version>
+
+        <structured-map-proxy-version>1.2.0</structured-map-proxy-version>
+        <judo-dao-api-version>1.0.3</judo-dao-api-version>
+        <judo-dispatcher-api-version>1.0.2</judo-dispatcher-api-version>
+        <judo-sdk-common-version>1.0.2</judo-sdk-common-version>
+        <mapper-version>1.0.3</mapper-version>
+
+        <judo-platform-version>2.0.1.20221201_123317_7aaf1bb6_develop</judo-platform-version>
+        <judo-services-version>1.1.0.20221201_102536_3fc7de65_develop</judo-services-version>
+        <judo-rdbms-schema-version>1.0.0.20221130_231648_bcdcd861_develop</judo-rdbms-schema-version>
+        <judo-jsl-fullstack-karaf-project-template-version>1.0.0-SNAPSHOT</judo-jsl-fullstack-karaf-project-template-version>
+
+        <!-- Frontend -->
+
+        <frontend-type>react</frontend-type>
+
+        <!-- React -->
+        <node-version-defined>18.16.0</node-version-defined>
+        <pnpm-version-defined>8.6.1</pnpm-version-defined>
+        <judo-meta-ui-version-defined>1.0.0.20220618_232754_311274d9_develop</judo-meta-ui-version-defined>
+        <judo-ui-archetype-version-defined>1.0.0.20221003_142712_453def5b_develop</judo-ui-archetype-version-defined>
+        <judo-tatami-ui2web-version-defined>1.0.0.20230117_190258_43070f4d_develop</judo-tatami-ui2web-version-defined>
+        <judo-tatami-ui2typescript-maven-plugin-version-defined>1.0.0.20230117_190258_43070f4d_develop</judo-tatami-ui2typescript-maven-plugin-version-defined>
+        <judo-tatami-ui-external-packages-version-defined>1.0.0.20230117_190258_43070f4d_develop</judo-tatami-ui-external-packages-version-defined>
+
+        <appScope>@example</appScope>
+        <appVersion>1.0.0</appVersion>
+        <defaultLanguage>en</defaultLanguage>
+        <tablePageLimit>10</tablePageLimit>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>hu.blackbelt.judo.meta</groupId>
+                <artifactId>judo-jsl-generator-maven-plugin</artifactId>
+                <version>${judo-meta-jsl-version}</version>
+                <executions>
+                    <execution>
+                        <id>execute-jsl-test-model-from-artifact</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <uris>
+                                <uri>mvn:hu.blackbelt.judo.template:judo-jsl-fullstack-karaf-project-template:${judo-jsl-fullstack-karaf-project-template-version}</uri>
+                            </uris>
+                            <helpers>
+                                <helper>hu.blackbelt.judo.jsl.fullstack.project.archetype.JslDslProjectHelper</helper>
+                            </helpers>
+                            <type>fullstack-project</type>
+                            <destination>${basedir}/target/classes</destination>
+                            <templateParameters> <!-- 1 -->
+                                <groupId>${project.groupId}</groupId>
+                                <artifactId>${project.artifactId}</artifactId>
+                                <version>${project.version}</version>
+
+                                <modelGroupId>${project.groupId}</modelGroupId>
+                                <modelArtifactId>${project.artifactId}-test-model</modelArtifactId>
+                                <modelVersion>${project.version}</modelVersion>
+
+                                <sqlDialects>hsqldb</sqlDialects>
+                                <ignoreOpenAPI>true</ignoreOpenAPI>
+                                <validateModels>false</validateModels>
+
+                                <structuredMapProxyVersion>${structured-map-proxy-version}</structuredMapProxyVersion>
+                                <judoDaoApiVersion>${judo-dao-api-version}</judoDaoApiVersion>
+                                <judoDispatcherApiVersion>${judo-dispatcher-api-version}</judoDispatcherApiVersion>
+                                <judoSdkCommonVersion>${judo-sdk-common-version}</judoSdkCommonVersion>
+                                <mapperVersion>${mapper-version}</mapperVersion>
+
+                                <judoTatamiJslVersion>${judo-tatami-jsl-version}</judoTatamiJslVersion>
+                                <judoPlatformVersion>${judo-platform-version}</judoPlatformVersion>
+                                <judoServicesVersion>${judo-services-version}</judoServicesVersion>
+                                <judoRdbmsSchemaVersion>${judo-rdbms-schema-version}</judoRdbmsSchemaVersion>
+
+                                <!-- Frontend -->
+
+                                <frontendType>${frontend-type}</frontendType>
+
+                                <!-- React -->
+
+                                <nodeVersion>${node-version-defined}</nodeVersion>
+                                <pnpmVersion>${pnpm-version-defined}</pnpmVersion>
+                                <judoMetaUIVersion>${judo-meta-ui-version-defined}</judoMetaUIVersion>
+                                <judoUIArchetypeVersion>${judo-ui-archetype-version-defined}</judoUIArchetypeVersion>
+                                <judoTatamiUI2WebVersion>${judo-tatami-ui2web-version-defined}</judoTatamiUI2WebVersion>
+                                <judoTatamiUI2TypeScriptMavenPluginVersion>${judo-tatami-ui2typescript-maven-plugin-version-defined}</judoTatamiUI2TypeScriptMavenPluginVersion>
+                                <judoTatamiUIExternalPackagesVersion>${judo-tatami-ui-external-packages-version-defined}</judoTatamiUIExternalPackagesVersion>
+
+                                <appScope>${appScope}</appScope> <!-- optional -->
+                                <appVersion>${appVersion}</appVersion>
+                                <defaultLanguage>${defaultLanguage}</defaultLanguage> <!-- optional, default: en-US -->
+                                <muiLicensePlan>${muiLicensePlan}</muiLicensePlan> <!-- optional, default: community -->
+                                <tablePageLimit>${tablePageLimit}</tablePageLimit> <!-- optional, default: 10 -->
+                            </templateParameters>
+                        </configuration>
+                    </execution>
+                </executions>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>hu.blackbelt.judo.template</groupId>
+                        <artifactId>judo-jsl-fullstack-karaf-project-template</artifactId>
+                        <version>${judo-jsl-fullstack-karaf-project-template-version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+----
+
+This example generates a complete project setup into `target/classes` directory.
+In a project this generation can be placed in the model project as a
+profile.
+
+The `judo-jsl-archetype-maven-plugin` documentation is placed inside
+the plugin documentation itself. https://github.com/BlackBeltTechnology/judo-jsl-archetype
+
+<1> All the template parameters are mandatory, because that's used for
+project template's version definitions.
+

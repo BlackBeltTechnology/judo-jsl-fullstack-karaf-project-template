@@ -1,0 +1,11 @@
+<!-- To define create 'app/pom.xml.project-definition.fragment.hbs' file -->
+<parent>
+    <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}</artifactId>
+    <groupId>{{ groupId }}</groupId>
+    <version>${revision}</version>
+</parent>
+
+<artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-app</artifactId>
+<name>{{ model.name }} custom operations</name>
+<description>Build a {{ model.name }} web project for hosting in {{ model.name }}{{ projectPostfix }}</description>
+<!-- End of 'app/pom.xml.project-definition.fragment.hbs' -->

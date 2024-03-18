@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!-- This is generated file. It is composed from template fragment which can be extended -->
+
+    {{> app/pom.xml.project-definition.fragment.hbs }}
+
+    <packaging>bundle</packaging>
+
+    <properties>
+        {{> app/pom.xml.properties-definition.fragment.hbs }}
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                {{> app/pom.xml.extra-plugin-management.fragment.hbs }}
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>hu.blackbelt.judo.meta</groupId>
+                <artifactId>judo-psm-generator-maven-plugin</artifactId>
+                <version>${judo-meta-psm-version}</version>
+                <configuration>
+                    <psm>mvn:${project.groupId}:{{ lowerCase model.name }}{{ projectPostfix }}-model:${project.version}!model/${model-name}-psm.model</psm>
+                    <destination>${basedir}/src/main/java</destination>
+                    <uris>
+                        <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-sdk-core-common:${judo-psm-generator-sdk-core-version}</uri>
+                        <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-sdk-core-empty-custom-operation-osgi:${judo-psm-generator-sdk-core-version}</uri>
+                    </uris>
+                    <type>psm-sdk-core</type>
+                    <templateParameters>
+                        <apiPrefix>${project.groupId}.{{ lowerCase model.name }}.api</apiPrefix>
+                        <operationPrefix>${project.groupId}.{{ lowerCase model.name }}.operation</operationPrefix>
+                        <osgiPrefix>${project.groupId}.{{ lowerCase model.name }}.osgi</osgiPrefix>
+                        <emptyCustomOperationOsgiPrefix>${project.groupId}.{{ lowerCase model.name }}.custom</emptyCustomOperationOsgiPrefix>
+                    </templateParameters>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>execute-psm-sdk-generation</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+            </plugin>
+
+            {{> app/pom.xml.extra-plugins.fragment.hbs }}
+
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>{{ groupId }}</groupId>
+            <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-sdk</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>hu.blackbelt.judo</groupId>
+            <artifactId>judo-dao-api</artifactId>
+            <version>${judo-dao-api-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>hu.blackbelt.judo</groupId>
+            <artifactId>judo-dispatcher-api</artifactId>
+            <version>${judo-dispatcher-api-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>hu.blackbelt</groupId>
+            <artifactId>structured-map-proxy</artifactId>
+            <version>${structured-map-proxy-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>hu.blackbelt.judo</groupId>
+            <artifactId>judo-sdk-common</artifactId>
+            <version>${judo-sdk-common-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>hu.blackbelt.judo.generator</groupId>
+            <artifactId>judo-psm-generator-sdk-core-common</artifactId>
+            <version>${judo-psm-generator-sdk-core-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>hu.blackbelt.judo.generator</groupId>
+            <artifactId>judo-psm-generator-sdk-core-osgi</artifactId>
+            <version>${judo-psm-generator-sdk-core-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>hu.blackbelt.judo.generator</groupId>
+            <artifactId>judo-psm-generator-sdk-core-empty-custom-operation-osgi</artifactId>
+            <version>${judo-psm-generator-sdk-core-version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.12.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>3.12.4</version>
+            <scope>test</scope>
+        </dependency>
+
+        {{> app/pom.xml.extra-dependencies.fragment.hbs }}
+    </dependencies>
+
+</project>

@@ -1,0 +1,11 @@
+<!-- To define create 'pom.xml.project-definition.fragment.hbs' file -->
+<parent>
+    <groupId>{{ groupId }}</groupId>
+    <artifactId>{{ lowerCase model.name }}</artifactId>
+    <version>${revision}</version>
+</parent>
+
+<artifactId>{{ lowerCase model.name }}{{ projectPostfix }}</artifactId>
+
+<name>{{ model.name }} application</name>
+<!-- End of 'pom.xml.project-definition.fragment.hbs' -->
