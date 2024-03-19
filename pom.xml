@@ -43,7 +43,7 @@
         <judo-tatami-jsl-version>1.1.4.20240319_041229_dc384c77_develop</judo-tatami-jsl-version>
         <judo-version-updater-maven-plugin-version>1.0.0.20231027_121339_45b7ebd2_develop</judo-version-updater-maven-plugin-version>
 
-        <surefire-version>3.0.0-M7</surefire-version>
+        <surefire-version>3.2.5</surefire-version>
         <!--suppress UnresolvedMavenProperty -->
         <logback-test-config>${maven.multiModuleProjectDirectory}/logback-test.xml</logback-test-config>
 
