@@ -58,7 +58,7 @@
                         <ignoreOpenAPI>true</ignoreOpenAPI>
                         <validateModels>false</validateModels>
 
-                        <structuredMapProxyVersion>${structured-map-proxy-version}</structuredMapProxyVersion>
+
                         <judoDaoApiVersion>${judo-dao-api-version}</judoDaoApiVersion>
                         <judoDispatcherApiVersion>${judo-dispatcher-api-version}</judoDispatcherApiVersion>
                         <judoSdkCommonVersion>${judo-sdk-common-version}</judoSdkCommonVersion>
@@ -144,7 +144,7 @@
                                 <ignoreOpenAPI>true</ignoreOpenAPI>
                                 <validateModels>false</validateModels>
 
-                                <structuredMapProxyVersion>${structured-map-proxy-version}</structuredMapProxyVersion>
+
                                 <judoDaoApiVersion>${judo-dao-api-version}</judoDaoApiVersion>
                                 <judoDispatcherApiVersion>${judo-dispatcher-api-version}</judoDispatcherApiVersion>
                                 <judoSdkCommonVersion>${judo-sdk-common-version}</judoSdkCommonVersion>
