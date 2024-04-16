@@ -33,7 +33,6 @@ It can be used as:
         <mapper-version>1.0.3</mapper-version>
 
         <judo-platform-version>2.0.1.20221201_123317_7aaf1bb6_develop</judo-platform-version>
-        <judo-services-version>1.1.0.20221201_102536_3fc7de65_develop</judo-services-version>
         <judo-rdbms-schema-version>1.0.0.20221130_231648_bcdcd861_develop</judo-rdbms-schema-version>
         <judo-jsl-fullstack-karaf-project-template-version>1.0.0-SNAPSHOT</judo-jsl-fullstack-karaf-project-template-version>
 
@@ -98,7 +97,6 @@ It can be used as:
 
                                 <judoTatamiJslVersion>${judo-tatami-jsl-version}</judoTatamiJslVersion>
                                 <judoPlatformVersion>${judo-platform-version}</judoPlatformVersion>
-                                <judoServicesVersion>${judo-services-version}</judoServicesVersion>
                                 <judoRdbmsSchemaVersion>${judo-rdbms-schema-version}</judoRdbmsSchemaVersion>
 
                                 <!-- Frontend -->
