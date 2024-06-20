@@ -40,7 +40,7 @@
 
         <judo-generator-commons-version>1.0.0.20231009_184136_321053b3_develop</judo-generator-commons-version>
         <judo-meta-jsl-version>1.0.3.20240430_183627_5fb8ebae_develop</judo-meta-jsl-version>
-        <judo-tatami-jsl-version>1.1.4.20240618_041354_54fbe371_develop</judo-tatami-jsl-version>
+        <judo-tatami-jsl-version>1.1.4.20240620_041846_1d54555d_develop</judo-tatami-jsl-version>
         <judo-version-updater-maven-plugin-version>1.0.0.20240422_090346_6f211573_develop</judo-version-updater-maven-plugin-version>
 
         <surefire-version>3.0.0-M7</surefire-version>
