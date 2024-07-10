@@ -107,7 +107,7 @@ It can be used as:
 
                                 <nodeVersion>${node-version-defined}</nodeVersion>
                                 <pnpmVersion>${pnpm-version-defined}</pnpmVersion>
-                                <judoMetaUIVersion>${judo-meta-ui-version-defined}</judoMetaUIVersion>
+                                <judoMetaUiVersion>${judo-meta-ui-version-defined}</judoMetaUiVersion>
                                 <judoUIArchetypeVersion>${judo-ui-archetype-version-defined}</judoUIArchetypeVersion>
                                 <judoTatamiUI2WebVersion>${judo-tatami-ui2web-version-defined}</judoTatamiUI2WebVersion>
                                 <judoTatamiUI2TypeScriptMavenPluginVersion>${judo-tatami-ui2typescript-maven-plugin-version-defined}</judoTatamiUI2TypeScriptMavenPluginVersion>
