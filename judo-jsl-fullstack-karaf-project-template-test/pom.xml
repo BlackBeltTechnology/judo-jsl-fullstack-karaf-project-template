@@ -69,7 +69,7 @@
                         <judoRdbmsSchemaVersion>${judo-rdbms-schema-version}</judoRdbmsSchemaVersion>
                         <judoTatamiClientVersion>${judo-tatami-client-version}</judoTatamiClientVersion>
 
-                        <judoMetaUIVersion>${judo-meta-ui-version}</judoMetaUIVersion>
+                        <judoMetaUiVersion>${judo-meta-ui-version}</judoMetaUiVersion>
                         <judoUiTypescriptRestTemplateVersion>${judo-ui-typescript-rest-template-version}</judoUiTypescriptRestTemplateVersion>
                         <judoUiReactTemplateVersion>${judo-ui-react-template-version}</judoUiReactTemplateVersion>
                         <frontendType>${frontendType}</frontendType>
@@ -154,7 +154,7 @@
                                 <judoRdbmsSchemaVersion>${judo-rdbms-schema-version}</judoRdbmsSchemaVersion>
                                 <judoTatamiClientVersion>${judo-tatami-client-version}</judoTatamiClientVersion>
 
-                                <judoMetaUIVersion>${judo-meta-ui-version}</judoMetaUIVersion>
+                                <judoMetaUiVersion>${judo-meta-ui-version}</judoMetaUiVersion>
                                 <judoUiTypescriptRestTemplateVersion>${judo-ui-typescript-rest-template-version}</judoUiTypescriptRestTemplateVersion>
                                 <judoUiReactTemplateVersion>${judo-ui-react-template-version}</judoUiReactTemplateVersion>
                                 <frontendType>${frontendType}</frontendType>
