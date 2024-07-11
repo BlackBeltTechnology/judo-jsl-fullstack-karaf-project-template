@@ -255,7 +255,7 @@ templates:
     conditionExpression: '#shouldGenerateE2EModule()'
 
   - name: e2e/actor/pom.xml
-    pathExpression: "'e2e/' + #pathName(#actorType.fQName) + '/pom.xml'"
+    pathExpression: "'e2e/' + #pathName(#fQName(#actorType)) + '/pom.xml'"
     templateName: e2e/actor/pom.xml.hbs
     actorTypeBased: true
     conditionExpression: '#shouldGenerateE2EModule()'
@@ -284,14 +284,14 @@ templates:
     conditionExpression: '#shouldGenerateFrontendModule()'
 
   - name: frontend-react/actor/.generator-ignore
-    pathExpression: "'frontend-react/' + #pathName(#actorType.fQName) + '/.generator-ignore'"
+    pathExpression: "'frontend-react/' + #pathName(#fQName(#actorType)) + '/.generator-ignore'"
     templateName: frontend-react/actor/generator-ignore
     actorTypeBased: true
     copy: true
     conditionExpression: '#shouldGenerateFrontendModule()'
 
   - name: frontend-react/actor/pom.xml
-    pathExpression: "'frontend-react/' + #pathName(#actorType.fQName) + '/pom.xml'"
+    pathExpression: "'frontend-react/' + #pathName(#fQName(#actorType)) + '/pom.xml'"
     templateName: frontend-react/actor/pom.xml.hbs
     actorTypeBased: true
     conditionExpression: '#shouldGenerateFrontendModule()'

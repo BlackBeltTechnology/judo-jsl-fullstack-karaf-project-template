@@ -19,4 +19,5 @@
 ###
 .generator-ignore
 judo.properties
+judo-karaf.env
 generator-parameter.properties
