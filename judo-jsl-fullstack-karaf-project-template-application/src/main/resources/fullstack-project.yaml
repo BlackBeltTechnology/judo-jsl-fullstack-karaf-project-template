@@ -30,6 +30,7 @@ templates:
     pathExpression: "'sdk/pom.xml'"
     templateName: sdk/pom.xml.hbs
     actorTypeBased: false
+    conditionExpression: '#shouldGenerateSdkModule()'
 
   ###############################################
   # REST
@@ -39,6 +40,7 @@ templates:
     pathExpression: "'rest/pom.xml'"
     templateName: rest/pom.xml.hbs
     actorTypeBased: false
+    conditionExpression: '#shouldGenerateRestModule()'
 
   ###############################################
   # Internal
@@ -48,6 +50,7 @@ templates:
     pathExpression: "'internal/pom.xml'"
     templateName: internal/pom.xml.hbs
     actorTypeBased: false
+    conditionExpression: '#shouldGenerateInternalModule()'
 
   ###############################################
   # app
@@ -58,29 +61,72 @@ templates:
     templateName: app/src/main/java/gitkeep
     actorTypeBased: false
     copy: true
+    conditionExpression: '#shouldGenerateApplicationModule()'
 
   - name: app/src/main/resources/gitkeep
     pathExpression: "'app/src/main/resources/gitkeep'"
     templateName: app/src/main/resources/gitkeep
     actorTypeBased: false
     copy: true
+    conditionExpression: '#shouldGenerateApplicationModule()'
 
   - name: app/src/test/java/gitkeep
     pathExpression: "'app/src/test/java/gitkeep'"
     templateName: app/src/test/java/gitkeep
     actorTypeBased: false
     copy: true
+    conditionExpression: '#shouldGenerateApplicationModule()'
 
   - name: app/src/test/resources/gitkeep
     pathExpression: "'app/src/test/resources/gitkeep'"
     templateName: app/src/test/resources/gitkeep
     actorTypeBased: false
     copy: true
+    conditionExpression: '#shouldGenerateApplicationModule()'
 
   - name:  app/pom.xml
     pathExpression: "'app/pom.xml'"
     templateName: app/pom.xml.hbs
     actorTypeBased: false
+    conditionExpression: '#shouldGenerateApplicationModule()'
+
+  ###############################################
+  # interceptor
+  ###############################################
+
+  - name: interceptors/src/main/java/gitkeep
+    pathExpression: "'interceptors/src/main/java/gitkeep'"
+    templateName: interceptors/src/main/java/gitkeep
+    actorTypeBased: false
+    copy: true
+    conditionExpression: "#shouldGenerateInterceptorModule()"
+
+  - name: interceptors/src/main/resources/gitkeep
+    pathExpression: "'interceptors/src/main/resources/gitkeep'"
+    templateName: interceptors/src/main/resources/gitkeep
+    actorTypeBased: false
+    copy: true
+    conditionExpression: "#shouldGenerateInterceptorModule()"
+
+  - name: interceptors/src/test/java/gitkeep
+    pathExpression: "'interceptors/src/test/java/gitkeep'"
+    templateName: interceptors/src/test/java/gitkeep
+    actorTypeBased: false
+    copy: true
+    conditionExpression: "#shouldGenerateInterceptorModule()"
+
+  - name: interceptors/src/test/resources/gitkeep
+    pathExpression: "'interceptors/src/test/resources/gitkeep'"
+    templateName: interceptors/src/test/resources/gitkeep
+    actorTypeBased: false
+    copy: true
+    conditionExpression: "#shouldGenerateInterceptorModule()"
+
+  - name:  interceptors/pom.xml
+    pathExpression: "'interceptors/pom.xml'"
+    templateName: interceptors/pom.xml.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateInterceptorModule()"
 
   ###############################################
   # docker
@@ -90,40 +136,47 @@ templates:
     pathExpression: "'docker/pom.xml'"
     templateName: docker/pom.xml.hbs
     actorTypeBased: false
+    conditionExpression: "#shouldGenerateDockerModule()"
 
   - name: docker/src/main/resources/gitkeep
     pathExpression: "'docker/src/main/resources/gitkeep'"
     templateName: docker/src/main/resources/gitkeep
     actorTypeBased: false
     copy: true
+    conditionExpression: "#shouldGenerateDockerModule()"
 
   - name: docker/overrided/bin/setenv
     pathExpression: "'docker/overrided/bin/setenv'"
     templateName: docker/overrided/bin/setenv
     actorTypeBased: false
     copy: true
+    conditionExpression: "#shouldGenerateDockerModule()"
 
   - name: docker/compose-develop/docker-compose.yml
     pathExpression: "'docker/compose-develop/docker-compose.yml'"
     templateName: docker/compose-develop/docker-compose.yml.hbs
     actorTypeBased: false
+    conditionExpression: "#shouldGenerateDockerModule()"
 
   - name: docker/compose-postgresql-https/docker-compose.yml
     pathExpression: "'docker/compose-postgresql-https/docker-compose.yml'"
     templateName: docker/compose-postgresql-https/docker-compose.yml.hbs
     actorTypeBased: false
+    conditionExpression: "#shouldGenerateDockerModule()"
 
   - name: docker/compose-postgresql-https/tls.yml
     pathExpression: "'docker/compose-postgresql-https/tls.yml'"
     templateName: docker/compose-postgresql-https/tls.yml
     actorTypeBased: false
     copy: true
+    conditionExpression: "#shouldGenerateDockerModule()"
 
   - name: docker/compose-postgresql-https/traefik.yml
     pathExpression: "'docker/compose-postgresql-https/traefik.yml'"
     templateName: docker/compose-postgresql-https/traefik.yml
     actorTypeBased: false
     copy: true
+    conditionExpression: "#shouldGenerateDockerModule()"
 
   ###############################################
   # karaf-features
@@ -133,11 +186,13 @@ templates:
     pathExpression: "'karaf-features/pom.xml'"
     templateName: karaf-features/pom.xml.hbs
     actorTypeBased: false
+    conditionExpression: "#shouldGenerateKarafModule()"
 
   - name: karaf-features/src/main/feature/feature.xml
     pathExpression: "'karaf-features/src/main/feature/feature.xml'"
     templateName: karaf-features/src/main/feature/feature.xml.hbs
     actorTypeBased: false
+    conditionExpression: "#shouldGenerateKarafModule()"
 
   ###############################################
   # karaf-offline
@@ -147,6 +202,7 @@ templates:
     pathExpression: "'karaf-offline/pom.xml'"
     templateName: karaf-offline/pom.xml.hbs
     actorTypeBased: false
+    conditionExpression: "#shouldGenerateKarafModule()"
 
   ###############################################
   # model
@@ -156,6 +212,7 @@ templates:
     pathExpression: "'model/pom.xml'"
     templateName: model/pom.xml.hbs
     actorTypeBased: false
+    conditionExpression: '#shouldGenerateModelModule()'
 
   ###############################################
   # schema
@@ -165,17 +222,49 @@ templates:
     pathExpression: "'schema/pom.xml'"
     templateName: schema/pom.xml.hbs
     actorTypeBased: false
+    conditionExpression: "#shouldGenerateSchemaModule()"
 
   - name: schema/README.adoc
     pathExpression: "'schema/README.adoc'"
     templateName: schema/README.adoc.hbs
     actorTypeBased: false
+    conditionExpression: "#shouldGenerateSchemaModule()"
 
   - name: schema/migration/gitkeep
     pathExpression: "'schema/migration/gitkeep'"
     templateName: schema/migration/gitkeep
     actorTypeBased: false
     copy: true
+    conditionExpression: "#shouldGenerateSchemaModule()"
+
+  ###############################################
+  # e2e
+  ###############################################
+
+  - name: e2e/gitignore
+    pathExpression: "'e2e/.gitignore'"
+    templateName: e2e/gitignore
+    actorTypeBased: false
+    copy: true
+    conditionExpression: '#shouldGenerateE2EModule()'
+
+  - name: e2e/pom.xml
+    pathExpression: "'e2e/pom.xml'"
+    templateName: e2e/pom.xml.hbs
+    actorTypeBased: false
+    conditionExpression: '#shouldGenerateE2EModule()'
+
+  - name: e2e/actor/pom.xml
+    pathExpression: "'e2e/' + #pathName(#fQName(#actorType)) + '/pom.xml'"
+    templateName: e2e/actor/pom.xml.hbs
+    actorTypeBased: true
+    conditionExpression: '#shouldGenerateE2EModule()'
+
+  - name: e2e/model/pom.xml
+    pathExpression: "'e2e/model/pom.xml'"
+    templateName: e2e/model/pom.xml.hbs
+    actorTypeBased: false
+    conditionExpression: '#shouldGenerateE2EModule()'
 
   ###############################################
   # frontend - react
@@ -186,24 +275,42 @@ templates:
     templateName: frontend-react/gitignore
     actorTypeBased: false
     copy: true
+    conditionExpression: '#shouldGenerateFrontendModule()'
 
   - name: frontend-react/pom.xml
     pathExpression: "'frontend-react/pom.xml'"
     templateName: frontend-react/pom.xml.hbs
     actorTypeBased: false
+    conditionExpression: '#shouldGenerateFrontendModule()'
+
+  - name: frontend-react/actor/.generator-ignore
+    pathExpression: "'frontend-react/' + #pathName(#fQName(#actorType)) + '/.generator-ignore'"
+    templateName: frontend-react/actor/generator-ignore
+    actorTypeBased: true
+    copy: true
+    conditionExpression: '#shouldGenerateFrontendModule()'
 
   - name: frontend-react/actor/pom.xml
     pathExpression: "'frontend-react/' + #pathName(#fQName(#actorType)) + '/pom.xml'"
     templateName: frontend-react/actor/pom.xml.hbs
     actorTypeBased: true
+    conditionExpression: '#shouldGenerateFrontendModule()'
 
   - name: frontend-react/model/pom.xml
     pathExpression: "'frontend-react/model/pom.xml'"
     templateName: frontend-react/model/pom.xml.hbs
     actorTypeBased: false
+    conditionExpression: '#shouldGenerateFrontendModule()'
+
+  - name: frontend-react/model/gitignore
+    pathExpression: "'frontend-react/model/.gitignore'"
+    templateName: frontend-react/model/gitignore
+    actorTypeBased: false
+    copy: true
+    conditionExpression: '#shouldGenerateFrontendModule()'
 
   - name: frontend-react/README.adoc
     pathExpression: "'frontend-react/README.adoc'"
     templateName: frontend-react/README.adoc.hbs
     actorTypeBased: false
-
+    conditionExpression: '#shouldGenerateFrontendModule()'

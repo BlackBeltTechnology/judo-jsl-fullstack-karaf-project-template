@@ -2,7 +2,7 @@
 services:
   proxy:
     restart: unless-stopped
-    image: traefik:v2.9.7
+    image: {{# if dockerTraefikImage }}{{ dockerTraefikImage }}{{ else }}traefik{{/ if }}:{{# if dockerTraefikTag }}{{ dockerTraefikTag }}{{ else }}v2.9.7{{/ if }}
     command: --providers.docker=true
     ports:
       - "80:80"
@@ -13,7 +13,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   auth:
-    image: quay.io/keycloak/keycloak:latest
+    image: {{# if dockerKeycloakImage }}{{ dockerKeycloakImage }}{{ else }}quay.io/keycloak/keycloak{{/ if }}:{{# if dockerKeycloakTag }}{{ dockerKeycloakTag }}{{ else }}latest{{/ if }}
     labels:
       - "traefik.http.routers.auth.rule=Host(`auth.traefik.me`)"
       - "traefik.http.services.auth.loadbalancer.server.port=8080"
@@ -25,7 +25,7 @@ services:
       - --hostname-url http://auth.traefik.me
       - --http-port 8080
   app:
-    image: {{ lowerCase model.name }}-application:latest
+    image: {{ lowerCase model.name }}-application:{{# if dockerApplicationTag }}{{ dockerApplicationTag }}{{ else }}latest{{/ if }}
     labels:
       - "traefik.http.routers.app.rule=Host(`app.traefik.me`)"
       - "traefik.http.services.app.loadbalancer.server.port=8181"

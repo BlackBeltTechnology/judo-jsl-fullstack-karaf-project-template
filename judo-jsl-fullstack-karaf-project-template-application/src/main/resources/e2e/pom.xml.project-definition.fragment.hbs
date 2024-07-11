@@ -1,0 +1,10 @@
+<!-- To define create 'e2e/pom.xml.project-definition.fragment.hbs' file -->
+<parent>
+    <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}</artifactId>
+    <groupId>{{ groupId }}</groupId>
+    <version>${revision}</version>
+</parent>
+
+<artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-e2e</artifactId>
+<name>{{ model.name }} e2e tests</name>
+<!-- End of 'e2e/pom.xml.project-definition.fragment.hbs' -->
