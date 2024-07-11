@@ -1,0 +1,11 @@
+<!-- To redefine project definition create 'frontend-react/model/pom.xml.project-definition.fragment.override.hbs' file -->
+<parent>
+    <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-e2e</artifactId>
+    <groupId>{{ groupId }}</groupId>
+    <version>${revision}</version>
+</parent>
+
+<artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-e2e-model</artifactId>
+<name>{{ model.name}} - E2E Model</name>
+<description>{{ model.name}} - E2E Model</description>
+<!-- End of 'e2e/model/pom.xml.project-definition.fragment.override.hbs' -->

@@ -195,11 +195,31 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Report active profiles on console. -->
+            <!--
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-help-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>show-profiles</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>active-profiles</goal>
+                        </goals>
+                        <inherited>false</inherited>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
             {{> pom.xml.extra-plugins.fragment.hbs }}
         </plugins>
     </build>
 
     <profiles>
+        {{# if shouldGenerateModelModule }}
         <profile>
             <id>build-model</id>
             <activation>
@@ -212,7 +232,9 @@
                 <module>model</module>
             </modules>
         </profile>
+        {{/ if }}
 
+        {{# if shouldGenerateSchemaModule }}
         <profile>
             <id>build-schema</id>
             <activation>
@@ -225,7 +247,9 @@
                 <module>schema</module>
             </modules>
         </profile>
+        {{/ if }}
 
+        {{# or shouldGenerateSdkModule shouldGenerateInternalModule shouldGenerateApplicationModule shouldGenerateInterceptorModule shouldGenerateRestModule }}
         <profile>
             <id>build-sdk</id>
             <activation>
@@ -235,14 +259,27 @@
             </activation>
 
             <modules>
+                {{# if shouldGenerateSdkModule }}
                 <module>sdk</module>
+                {{/ if }}
+                {{# if shouldGenerateInternalModule }}
                 <module>internal</module>
+                {{/ if }}
+                {{# if shouldGenerateApplicationModule }}
                 <module>app</module>
+                {{/ if }}
+                {{# if shouldGenerateInterceptorModule }}
+                <module>interceptors</module>
+                {{/ if }}
+                {{# if shouldGenerateRestModule }}
                 <module>rest</module>
+                {{/ if }}
                 {{> pom.xml.extra-modules.fragment.hbs }}
             </modules>
         </profile>
+        {{/ or }}
 
+        {{# if shouldGenerateFrontendModule }}
         <profile>
             <id>build-frontend-react</id>
             <activation>
@@ -259,7 +296,24 @@
                 <module>frontend-react</module>
             </modules>
         </profile>
+        {{/ if }}
 
+        {{# if shouldGenerateE2EModule }}
+        <profile>
+            <id>build-e2e</id>
+            <activation>
+                <property>
+                    <name>!skipE2E</name>
+                </property>
+            </activation>
+
+            <modules>
+                <module>e2e</module>
+            </modules>
+        </profile>
+        {{/ if }}
+
+        {{# if shouldGenerateDockerModule }}
         <profile>
             <id>build-docker</id>
             <activation>
@@ -272,7 +326,9 @@
                 <module>docker</module>
             </modules>
         </profile>
+        {{/ if }}
 
+        {{# if shouldGenerateKarafModule }}
         <profile>
             <id>build-karaf</id>
             <activation>
@@ -286,6 +342,7 @@
                 <module>karaf-offline</module>
             </modules>
         </profile>
+        {{/ if }}
 
         <profile>
             <id>sign-artifacts</id>
@@ -341,7 +398,7 @@
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.2.11</version>
+                <version>1.4.11</version>
             </dependency>
             {{> pom.xml.extra-dependency-management.fragment.hbs }}
         </dependencies>

@@ -54,7 +54,7 @@
                         <version>${judo-meta-ui-version}</version>
                         <executions>
                             <execution>
-                                <id>execute-ui-generation</id>
+                                <id>execute-ui-react-generation</id>
                                 <phase>generate-sources</phase>
                                 <goals>
                                     <goal>generate</goal>
@@ -87,6 +87,36 @@
                                         <muiLicensePlan>${muiLicensePlan}</muiLicensePlan>
                                     </templateParameters>
                                     <validateChecksum>${validateChecksum}</validateChecksum>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>synchronize-ui-react-gitignore</id>
+                                <phase>process-sources</phase>
+                                <goals>
+                                    <goal>synchronizeGitignore</goal>
+                                </goals>
+                                <configuration>
+                                    <applications>
+                                        ${actor-name}
+                                    </applications>
+                                    <ui>${ui-model}</ui>
+                                    <destination>${basedir}</destination>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>reset-ui-react-checksums</id>
+                                <phase>process-sources</phase>
+                                <goals>
+                                    <goal>resetChecksum</goal>
+                                </goals>
+                                <configuration>
+                                    <applications>
+                                        ${actor-name}
+                                    </applications>
+                                    <ui>${ui-model}</ui>
+                                    <destination>${basedir}</destination>
                                 </configuration>
                             </execution>
                         </executions>
@@ -147,6 +177,35 @@
                                     <validateChecksum>${validateChecksum}</validateChecksum>
                                 </configuration>
                             </execution>
+                            <execution>
+                                <id>synchronize-service-gitignore</id>
+                                <phase>process-sources</phase>
+                                <goals>
+                                    <goal>synchronizeGitignore</goal>
+                                </goals>
+                                <configuration>
+                                    <applications>
+                                        ${actor-name}
+                                    </applications>
+                                    <ui>${ui-model}</ui>
+                                    <destination>${basedir}/src/services</destination>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>reset-service-checksums</id>
+                                <phase>process-sources</phase>
+                                <goals>
+                                    <goal>resetChecksum</goal>
+                                </goals>
+                                <configuration>
+                                    <applications>
+                                        ${actor-name}
+                                    </applications>
+                                    <ui>${ui-model}</ui>
+                                    <destination>${basedir}/src/services</destination>
+                                </configuration>
+                            </execution>
 
                         </executions>
                         <dependencies>
@@ -177,10 +236,10 @@
         </profile>
 
         <profile>
-            <id>build-frontend</id>
+            <id>build-frontend-full</id>
             <activation>
                 <property>
-                    <name>!quick</name>
+                    <name>!frontend-build-type</name>
                 </property>
             </activation>
             <build>
@@ -244,10 +303,68 @@
         </profile>
 
         <profile>
+            <id>build-frontend-CI</id>
+            <activation>
+                <property>
+                    <name>frontend-build-type</name>
+                    <value>CI</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>${frontend-maven-plugin-version}</version>
+                        <executions>
+                            <execution>
+                                <id>pnpm install</id>
+                                <goals>
+                                    <goal>pnpm</goal>
+                                </goals>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <arguments>install</arguments>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>build</id>
+                                <goals>
+                                    <goal>pnpm</goal>
+                                </goals>
+                                <phase>compile</phase>
+                                <configuration>
+                                    <arguments>run build</arguments>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>test</id>
+                                <goals>
+                                    <goal>pnpm</goal>
+                                </goals>
+                                <phase>test</phase>
+                                <configuration>
+                                    <arguments>run --if-present test</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <installDirectory>${node-install-dir}</installDirectory>
+                            <workingDirectory>${basedir}</workingDirectory>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
             <id>build-frontend-quick</id>
             <activation>
                 <property>
-                    <name>quick</name>
+                    <name>frontend-build-type</name>
+                    <value>quick</value>
                 </property>
             </activation>
             <build>

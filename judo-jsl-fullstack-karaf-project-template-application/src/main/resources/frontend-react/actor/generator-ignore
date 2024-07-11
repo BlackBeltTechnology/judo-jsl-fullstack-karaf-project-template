@@ -1,6 +1,6 @@
 ###
 # #%L
-# JUDO JSL Fullstack Karaf Project Template
+# JUDO ESM Fullstack Project Template
 # %%
 # Copyright (C) 2018 - 2023 BlackBelt Technology
 # %%
@@ -18,6 +18,4 @@
 # #L%
 ###
 .generator-ignore
-judo.properties
-judo-karaf.env
-generator-parameter.properties
+.gitignore
