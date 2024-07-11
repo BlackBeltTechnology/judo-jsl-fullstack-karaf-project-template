@@ -2,7 +2,7 @@
 services:
   proxy:
     restart: unless-stopped
-    image: traefik:v2.9.7
+    image: {{# if dockerTraefikImage }}{{ dockerTraefikImage }}{{ else }}traefik{{/ if }}:{{# if dockerTraefikTag }}{{ dockerTraefikTag }}{{ else }}v2.9.7{{/ if }}
     command: --providers.docker=true
     ports:
       - "80:80"
@@ -19,7 +19,7 @@ services:
       - {{ lowerCase model.name }}_certs:/etc/ssl/traefik
 
   auth:
-    image: quay.io/keycloak/keycloak:latest
+    image: {{# if dockerKeycloakImage }}{{ dockerKeycloakImage }}{{ else }}quay.io/keycloak/keycloak{{/ if }}:{{# if dockerKeycloakTag }}{{ dockerKeycloakTag }}{{ else }}latest{{/ if }}
     labels:
       - "traefik.http.routers.auth.rule=Host(`auth.traefik.me`)"
       - "traefik.http.services.auth.loadbalancer.server.port=8080"
@@ -44,7 +44,7 @@ services:
     depends_on:
       - postgres      
   app:
-    image: {{ lowerCase model.name }}-application:latest
+    image: {{ lowerCase model.name }}-application:{{# if dockerApplicationTag }}{{ dockerApplicationTag }}{{ else }}latest{{/ if }}
     labels:
       - "traefik.http.routers.app.rule=Host(`app.traefik.me`)"
       - "traefik.http.services.app.loadbalancer.server.port=8181"
@@ -67,7 +67,7 @@ services:
       - JUDO_PLATFORM_RDBMS_DB_HOST=postgres
 
   postgres:
-    image: postgres:14.1-alpine
+    image: {{# if dockerPostgresImage }}{{ dockerPostgresImage }}{{ else }}postgres{{/ if }}:{{# if dockerPostgresTag }}{{ dockerPostgresTag }}{{ else }}latest{{/ if }}
     restart: always
     environment:
       - POSTGRES_USER={{ lowerCase model.name }}
