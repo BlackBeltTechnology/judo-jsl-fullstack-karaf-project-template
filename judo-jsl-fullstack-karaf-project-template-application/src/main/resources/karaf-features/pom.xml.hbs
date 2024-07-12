@@ -127,24 +127,31 @@
             <version>${judo-platform-version}</version>
         </dependency>
 
+{{# if shouldGenerateModelModule }}
         <dependency>
             <groupId>{{ groupId }}</groupId>
             <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-model</artifactId>
             <version>${project.version}</version>
         </dependency>
+{{/ if }}
 
+{{# if shouldGenerateSdkModule }}
         <dependency>
             <groupId>{{ groupId }}</groupId>
             <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-sdk</artifactId>
             <version>${project.version}</version>
         </dependency>
+{{/ if }}
 
+{{# if shouldGenerateInternalModule }}
         <dependency>
             <groupId>{{ groupId }}</groupId>
             <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-internal</artifactId>
             <version>${project.version}</version>
         </dependency>
+{{/ if }}
 
+{{# if shouldGenerateModelModule }}
         <dependency>
             <groupId>{{ groupId }}</groupId>
             <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-model</artifactId>
@@ -152,19 +159,25 @@
             <classifier>script2operation</classifier>
             <type>jar</type>
         </dependency>
+{{/ if }}
 
+{{# if shouldGenerateRestModule }}
         <dependency>
             <groupId>{{ groupId }}</groupId>
             <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-rest</artifactId>
             <version>${project.version}</version>
         </dependency>
+{{/ if }}
 
+{{# if shouldGenerateApplicationModule }}
         <dependency>
             <groupId>{{ groupId }}</groupId>
             <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-app</artifactId>
             <version>${project.version}</version>
         </dependency>
+{{/ if }}
 
+{{# if shouldGenerateFrontendModule }}
 {{# each actorTypes as |actorType| }}
     {{# each (resolveFrontendType frontendType) as |frontendName| }}
         <dependency>
@@ -174,6 +187,7 @@
         </dependency>
     {{/ each }}
 {{/ each }}
+{{/ if }}
 
         {{> karaf-features/pom.xml.extra-dependencies.fragment.hbs }}
 

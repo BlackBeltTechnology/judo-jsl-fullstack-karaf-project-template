@@ -39,6 +39,11 @@ templates:
     templateName: judo.properties.hbs
     actorTypeBased: false
 
+  - name: judo-karaf.env
+    pathExpression: "'judo-karaf.env'"
+    templateName: judo-karaf.env.hbs
+    actorTypeBased: false
+
   - name: generator-parameter.properties
     pathExpression: "'generator-parameter.properties'"
     templateName: generator-parameter.properties.hbs

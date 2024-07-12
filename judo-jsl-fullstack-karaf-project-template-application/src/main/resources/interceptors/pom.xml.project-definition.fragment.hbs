@@ -1,0 +1,11 @@
+<!-- To define create 'interceptors/pom.xml.project-definition.fragment.hbs' file -->
+<parent>
+    <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}</artifactId>
+    <groupId>{{ groupId }}</groupId>
+    <version>${revision}</version>
+</parent>
+
+<artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-interceptors</artifactId>
+<name>{{ model.name }} interceptors</name>
+<description>Operations interceptors for {{ model.name }} application</description>
+<!-- End of 'interceptors/pom.xml.project-definition.fragment.hbs' -->
