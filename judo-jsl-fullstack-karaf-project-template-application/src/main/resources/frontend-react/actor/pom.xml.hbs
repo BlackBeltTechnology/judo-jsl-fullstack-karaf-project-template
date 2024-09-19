@@ -52,6 +52,35 @@
                         <groupId>hu.blackbelt.judo.meta</groupId>
                         <artifactId>judo-ui-generator-maven-plugin</artifactId>
                         <version>${judo-meta-ui-version}</version>
+                        <configuration>
+                            <uris>
+                                <uri>mvn:hu.blackbelt.judo.generator:judo-ui-react:${judo-ui-react-template-version}</uri>
+                                <uri>${override-dir}/ui-react</uri>
+                            </uris>
+                            <type>ui-react</type>
+                            <scanPackages>
+                                hu.blackbelt.judo.generator.commons,
+                                hu.blackbelt.judo.ui.generator.typescript.rest.commons,
+                                hu.blackbelt.judo.ui.generator.react
+                            </scanPackages>
+                            <applications>
+                                ${actor-name}
+                            </applications>
+                            <ui>${ui-model}</ui>
+                            <destination>${basedir}</destination>
+                            <templateParameters>
+                                <uiMetaVersion>${judo-meta-ui-version}</uiMetaVersion>
+                                <nodeInstallDir>${node-install-dir}</nodeInstallDir>
+
+                                <appModelName>${model-name}</appModelName>
+                                <appScope>${appScope}</appScope>
+                                <appVersion>${appVersion}</appVersion>
+                                <nodeVersion>${node-version}</nodeVersion>
+
+                                <muiLicensePlan>${muiLicensePlan}</muiLicensePlan>
+                            </templateParameters>
+                        </configuration>
+
                         <executions>
                             <execution>
                                 <id>execute-ui-react-generation</id>
@@ -60,32 +89,6 @@
                                     <goal>generate</goal>
                                 </goals>
                                 <configuration>
-                                    <uris>
-                                        <uri>mvn:hu.blackbelt.judo.generator:judo-ui-react:${judo-ui-react-template-version}</uri>
-                                        <uri>${override-dir}/ui-react</uri>
-                                    </uris>
-                                    <type>ui-react</type>
-                                    <scanPackages>
-                                        hu.blackbelt.judo.generator.commons,
-                                        hu.blackbelt.judo.ui.generator.typescript.rest.commons,
-                                        hu.blackbelt.judo.ui.generator.react
-                                    </scanPackages>
-                                    <applications>
-                                        ${actor-name}
-                                    </applications>
-                                    <ui>${ui-model}</ui>
-                                    <destination>${basedir}</destination>
-                                    <templateParameters>
-                                        <uiMetaVersion>${judo-meta-ui-version}</uiMetaVersion>
-                                        <nodeInstallDir>${node-install-dir}</nodeInstallDir>
-
-                                        <appModelName>${model-name}</appModelName>
-                                        <appScope>${appScope}</appScope>
-                                        <appVersion>${appVersion}</appVersion>
-                                        <nodeVersion>${node-version}</nodeVersion>
-
-                                        <muiLicensePlan>${muiLicensePlan}</muiLicensePlan>
-                                    </templateParameters>
                                     <validateChecksum>${validateChecksum}</validateChecksum>
                                 </configuration>
                             </execution>
@@ -96,13 +99,6 @@
                                 <goals>
                                     <goal>synchronizeGitignore</goal>
                                 </goals>
-                                <configuration>
-                                    <applications>
-                                        ${actor-name}
-                                    </applications>
-                                    <ui>${ui-model}</ui>
-                                    <destination>${basedir}</destination>
-                                </configuration>
                             </execution>
 
                             <execution>
@@ -111,14 +107,16 @@
                                 <goals>
                                     <goal>resetChecksum</goal>
                                 </goals>
-                                <configuration>
-                                    <applications>
-                                        ${actor-name}
-                                    </applications>
-                                    <ui>${ui-model}</ui>
-                                    <destination>${basedir}</destination>
-                                </configuration>
                             </execution>
+
+                            <execution>
+                                <id>generate-execute-ui-react-checksum</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>checksum</goal>
+                                </goals>
+                            </execution>
+
                         </executions>
                         <dependencies>
                             <dependency>
@@ -150,64 +148,62 @@
                         <groupId>hu.blackbelt.judo.meta</groupId>
                         <artifactId>judo-ui-generator-maven-plugin</artifactId>
                         <version>${judo-meta-ui-version}</version>
+                        <configuration>
+                            <uris>
+                                <uri>mvn:hu.blackbelt.judo.generator:judo-ui-typescript-rest-api:${judo-ui-typescript-rest-template-version}</uri>
+                                <uri>mvn:hu.blackbelt.judo.generator:judo-ui-typescript-rest-service:${judo-ui-typescript-rest-template-version}</uri>
+                                <uri>mvn:hu.blackbelt.judo.generator:judo-ui-typescript-rest-axios:${judo-ui-typescript-rest-template-version}</uri>
+                                <uri>${override-dir}/ui-typescript</uri>
+                            </uris>
+                            <type>ui-typescript-rest</type>
+                            <scanPackages>
+                                hu.blackbelt.judo.generator.commons,
+                                hu.blackbelt.judo.ui.generator.typescript.rest
+                            </scanPackages>
+                            <applications>
+                                ${actor-name}
+                            </applications>
+                            <ui>${ui-model}</ui>
+                            <destination>${basedir}/src/services</destination>
+                        </configuration>
+
                         <executions>
                             <execution>
-                                <id>execute-ui-services-generation</id>
+                                <id>execute-ui-service-generation</id>
                                 <phase>generate-sources</phase>
                                 <goals>
                                     <goal>generate</goal>
                                 </goals>
                                 <configuration>
-                                    <uris>
-                                        <uri>mvn:hu.blackbelt.judo.generator:judo-ui-typescript-rest-api:${judo-ui-typescript-rest-template-version}</uri>
-                                        <uri>mvn:hu.blackbelt.judo.generator:judo-ui-typescript-rest-service:${judo-ui-typescript-rest-template-version}</uri>
-                                        <uri>mvn:hu.blackbelt.judo.generator:judo-ui-typescript-rest-axios:${judo-ui-typescript-rest-template-version}</uri>
-                                        <uri>${override-dir}/ui-typescript</uri>
-                                    </uris>
-                                    <type>ui-typescript-rest</type>
-                                    <scanPackages>
-                                        hu.blackbelt.judo.generator.commons,
-                                        hu.blackbelt.judo.ui.generator.typescript.rest
-                                    </scanPackages>
-                                    <applications>
-                                        ${actor-name}
-                                    </applications>
-                                    <ui>${ui-model}</ui>
-                                    <destination>${basedir}/src/services</destination>
                                     <validateChecksum>${validateChecksum}</validateChecksum>
                                 </configuration>
                             </execution>
+
                             <execution>
-                                <id>synchronize-service-gitignore</id>
+                                <id>synchronize-ui-service-gitignore</id>
                                 <phase>process-sources</phase>
                                 <goals>
                                     <goal>synchronizeGitignore</goal>
                                 </goals>
-                                <configuration>
-                                    <applications>
-                                        ${actor-name}
-                                    </applications>
-                                    <ui>${ui-model}</ui>
-                                    <destination>${basedir}/src/services</destination>
-                                </configuration>
                             </execution>
 
                             <execution>
-                                <id>reset-service-checksums</id>
+                                <id>reset-ui-service-checksums</id>
                                 <phase>process-sources</phase>
                                 <goals>
                                     <goal>resetChecksum</goal>
                                 </goals>
-                                <configuration>
-                                    <applications>
-                                        ${actor-name}
-                                    </applications>
-                                    <ui>${ui-model}</ui>
-                                    <destination>${basedir}/src/services</destination>
-                                </configuration>
                             </execution>
 
+                            <execution>
+                                <id>generate-execute-ui-service-checksum</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>checksum</goal>
+                                </goals>
+                            </execution>
                         </executions>
+
                         <dependencies>
                             <dependency>
                                 <groupId>hu.blackbelt.judo.generator</groupId>
@@ -398,54 +394,6 @@
                         <configuration>
                             <installDirectory>${node-install-dir}</installDirectory>
                         </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>generate-build-checksum</id>
-            <activation>
-                <property>
-                    <name>!skipChecksumGeneration</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>hu.blackbelt.judo.meta</groupId>
-                        <artifactId>judo-ui-generator-maven-plugin</artifactId>
-                        <version>${judo-meta-ui-version}</version>
-                        <configuration>
-                            <applications>
-                                ${actor-name}
-                            </applications>
-                            <ui>${ui-model}</ui>
-                            <destination>${basedir}/src/services</destination>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>execute-ui-service-checksum</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>checksum</goal>
-                                </goals>
-                                <configuration>
-                                    <destination>${basedir}/src/services</destination>
-                                </configuration>
-                            </execution>
-
-                            <execution>
-                                <id>execute-ui-react-checksum</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>checksum</goal>
-                                </goals>
-                                <configuration>
-                                    <destination>${basedir}</destination>
-                                </configuration>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
