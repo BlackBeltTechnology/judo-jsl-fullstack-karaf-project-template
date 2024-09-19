@@ -60,12 +60,37 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>reset-psm-rest-checksums</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>resetChecksum</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
                         <id>execute-psm-rest-generation</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                     </execution>
+
+                    <execution>
+                        <id>synchronize-psm-rest-gitignore</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>synchronizeGitignore</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>generate-psm-rest-checksum</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>checksum</goal>
+                        </goals>
+                    </execution>
+
                 </executions>
             </plugin>
 

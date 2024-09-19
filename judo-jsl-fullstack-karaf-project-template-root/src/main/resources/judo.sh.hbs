@@ -6,14 +6,16 @@ JUDO runner.
 USAGE: judo.sh COMMANDS... [OPTIONS...]
     env <env>                               Use alternate env (custom properties file). Default judo is used.
     clean                                   Stop postgresql docker container and clear data.
-    reset-checksum                          Reset checksum. When the build fails with checksum error it can be reset with this command.
-
     prune                                   Stop postgresql docker container and delete untracked files in this repository.
         -f                                  Clear only frontend data.
         -y                                  Skip confirmation.
 
     update                                  Update dependency versions in JUDO project.
+        -i --ignore-checksum                Ignores checksum errors and updates checksums according to new sources.
+
     generate                                Generate application based on model in JUDO project.
+        -i --ignore-checksum                Ignores checksum errors and updates checksums according to new sources.
+
     dump                                    Dump postgresql db data before clearing and starting application.
     import                                  Import postgresql db data
         -dn --dump-name                     Import dump name when it's not defined loaded the last one
@@ -33,6 +35,8 @@ USAGE: judo.sh COMMANDS... [OPTIONS...]
         -S --skip-schema                    Skip building schema migration image.
         -ma --maven-argument                Add extra maven argument.
         -q --quick                          Quick mode which uses cache and ignores validations.
+        -i --ignore-checksum                Ignores checksum errors and updates checksums according to new sources.
+
     reckless                                Build and run project in reckless mode. It is skipping validations, docker builds and run as fast as possible.
     start                                   Run application with postgresql and keycloak.
         -W --skip-watch-bundles             Disable watching of bundle changes
@@ -95,7 +99,7 @@ parse_command_args () {
         case "$1" in
             env)                            currentcommand="env"; shift 2;;
             clean)                          currentcommand="clean"; clean=1; shift 1;;
-            reset-checksum)                 currentcommand="reset-checksum"; resetChecksum=1; shift 1;;
+            ignore-checksum)                currentcommand="ignore-checksum"; ignoreChecksum=1; shift 1;;
             prune)
                 currentcommand="prune"
                 git_available=$( git rev-parse --is-inside-work-tree )
@@ -128,6 +132,25 @@ parse_command_args () {
 
         if [ $# -eq 0 ]; then :
         elif [[ $1 =~ ^(env|clean|reset-checksum|prune|update|generate|dump|import|build|reckless|start|stop|status|schema-upgrade)$ ]]; then :
+        elif [ "${currentcommand}" == "update" ]; then
+            case "$1" in
+                -i | --ignore-checksum)         ignoreUpdateChecksum=1; shift 1;;
+                *)
+                    echo "Illegal option: $1 for command: $currentcommand"
+                    print-help
+                    exit 22
+                    ;;
+            esac
+
+        elif [ "${currentcommand}" == "generate" ]; then
+            case "$1" in
+                -i | --ignore-checksum)         ignoreGenerateChecksum=1; shift 1;;
+                *)
+                    echo "Illegal option: $1 for command: $currentcommand"
+                    print-help
+                    exit 22
+                    ;;
+            esac
         elif [ "${currentcommand}" == "prune" ]; then
             case "$1" in
                 -f)                             pruneFrontend=1; shift 1;;
@@ -162,6 +185,7 @@ parse_command_args () {
                 -v | --version)                 shift 1; versionNumber=$1; shift 1;;
                 -ma | --maven-argument)         shift 1; extraMavenArgs="$extraMavenArgs $1"; shift 1;;
                 -q | --quick)                   quickMode=1; shift 1;;
+                -i | --ignore-checksum)         ignoreBuildChecksum=1; shift 1;;
                 *)
                     echo "Illegal option: $1 for command: $currentcommand"
                     print-help
@@ -326,10 +350,6 @@ upgrade_postgresql_schema () {
 install_maven_wrapper () {
     mvn wrapper:wrapper -Dmaven=3.8.6 || exit
     sed $(get_sed_edit_option) 's/https:\/\/nexus\.judo\.technology\/repository\/maven-judong\//https:\/\/repo\.maven\.apache\.org\/maven2\//; s/https\:\/\//####/; s/\/\//\//; s/####/https\:\/\//' ${MODEL_DIR}/.mvn/wrapper/maven-wrapper.properties
-}
-
-reset_checksum () {
-    find ${MODEL_DIR} -name '.generated-file*' -type f | xargs rm -rf
 }
 
 prune_application () {
@@ -782,6 +802,9 @@ build () {
     echo "Building version ${versionNumber}"
     local goal="install"
     local args="$extraMavenArgs $mavenVersionArg -Dsmartbuilder.profiling=true"
+    if [ $ignoreBuildChecksum -eq 1 ]; then
+        args="$args -DvalidateChecksum=false"
+    fi
     if [ $reckless -eq 1 ]; then
         if [ $karaf -eq 0 ]; then
            echo "Reckless mode can be used with local karaf only"
@@ -797,6 +820,7 @@ build () {
         	-DskipSchemaCli=true \
         	-DskipKarafFeature=true"
     else
+        mvnd --purge --stop
         if [ $buildKaraf -eq 1 ]; then
             if [ $karaf -eq 1 ]; then
                 stop_karaf $KARAF_PORT $KARAF_DIR
@@ -918,7 +942,9 @@ dumpName=''
 schemaUpgrade=0
 watchBundles=1
 buildParallel=0
-resetChecksum=0
+ignoreUpdateChecksum=0
+ignoreGenerateChecksum=0
+ignoreBuildChecksum=0
 quickMode=0
 dockerBuilding=0
 
@@ -1022,10 +1048,6 @@ if [ $import -eq 1 ]; then
     start_postgres postgres-${schema_name} ${POSTGRES_PORT:-5432}
 fi
 
-if [ $resetChecksum -eq 1 ]; then
-    reset_checksum
-fi
-
 if [ $prune -eq 1 ]; then
     prune_application
 fi
@@ -1053,11 +1075,19 @@ if [ $update -eq 1 ]; then
     sdk selfupdate
     sdk env install
     sdk env
-    mvnd clean compile -DgenerateRoot -DskipApplicationBuild -DupdateJudoVersions=true -f ${MODEL_DIR} -U || exit
+    mvnargs="-DgenerateRoot -DskipApplicationBuild -DupdateJudoVersions=true"
+    if [ $ignoreUpdateChecksum -eq 1 ]; then
+        mvnargs="$mvnargs -DvalidateChecksum=false"
+    fi
+    mvnd clean compile $mvnargs -f ${MODEL_DIR} -U || exit
 fi
 
 if [ $generate -eq 1 ]; then
-    mvnd clean compile -DgenerateApplication -DskipApplicationBuild -f ${MODEL_DIR} || exit
+    mvnargs="-DgenerateApplication -DskipApplicationBuild"
+    if [ $ignoreGenerateChecksum -eq 1 ]; then
+        mvnargs="$mvnargs -DvalidateChecksum=false"
+    fi
+    mvnd clean compile $mvnargs -f ${MODEL_DIR} || exit
 fi
 
 if [ $build -eq 1 ]; then
