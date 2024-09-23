@@ -35,44 +35,37 @@
                 <artifactId>judo-psm-generator-maven-plugin</artifactId>
                 <version>${judo-meta-psm-version}</version>
 
-                <configuration>
-                    <psm>mvn:${project.groupId}:{{ lowerCase model.name }}{{ projectPostfix }}-model:${project.version}!model/${model-name}-psm.model</psm>
-                    <destination>${basedir}/target/generated-sources</destination>
-
-                    <uris>
-                        <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-jaxrs-common:${judo-psm-generator-jaxrs-version}</uri>
-                        <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-jaxrs-api:${judo-psm-generator-jaxrs-version}</uri>
-                        <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-jaxrs-impl:${judo-psm-generator-jaxrs-version}</uri>
-                        <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-jaxrs-osgi:${judo-psm-generator-jaxrs-version}</uri>
-                    </uris>
-                    <type>psm-jaxrs</type>
-                    <contextAccessor>hu.blackbelt.judo.psm.generator.jaxrs.api.StoredVariableHelper</contextAccessor>
-                    <scanPackages>
-                        hu.blackbelt.judo.generator.commons,
-                        hu.blackbelt.judo.psm.generator.jaxrs
-                    </scanPackages>
-                    <templateParameters>
-                        <debugPrint>true</debugPrint>
-                        <apiPrefix>${project.groupId}.{{ lowerCase model.name }}.api</apiPrefix>
-                        <implPrefix>${project.groupId}.{{ lowerCase model.name }}.impl</implPrefix>
-                        <osgiPrefix>${project.groupId}.{{ lowerCase model.name }}.osgi</osgiPrefix>
-                    </templateParameters>
-                </configuration>
                 <executions>
-                    <execution>
-                        <id>reset-psm-rest-checksums</id>
-                        <phase>process-sources</phase>
-                        <goals>
-                            <goal>resetChecksum</goal>
-                        </goals>
-                    </execution>
-
                     <execution>
                         <id>execute-psm-rest-generation</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
+                        <configuration>
+                            <psm>mvn:${project.groupId}:{{ lowerCase model.name }}{{ projectPostfix }}-model:${project.version}!model/${model-name}-psm.model</psm>
+                            <destination>${basedir}/target/generated-sources</destination>
+
+                            <uris>
+                                <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-jaxrs-common:${judo-psm-generator-jaxrs-version}</uri>
+                                <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-jaxrs-api:${judo-psm-generator-jaxrs-version}</uri>
+                                <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-jaxrs-impl:${judo-psm-generator-jaxrs-version}</uri>
+                                <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-jaxrs-osgi:${judo-psm-generator-jaxrs-version}</uri>
+                            </uris>
+                            <type>psm-jaxrs</type>
+                            <contextAccessor>hu.blackbelt.judo.psm.generator.jaxrs.api.StoredVariableHelper</contextAccessor>
+                            <scanPackages>
+                                hu.blackbelt.judo.generator.commons,
+                                hu.blackbelt.judo.psm.generator.jaxrs
+                            </scanPackages>
+                            <templateParameters>
+                                <debugPrint>true</debugPrint>
+                                <apiPrefix>${project.groupId}.{{ lowerCase model.name }}.api</apiPrefix>
+                                <implPrefix>${project.groupId}.{{ lowerCase model.name }}.impl</implPrefix>
+                                <osgiPrefix>${project.groupId}.{{ lowerCase model.name }}.osgi</osgiPrefix>
+                            </templateParameters>
+                            <validateChecksum>${validateChecksum}</validateChecksum>
+                        </configuration>
                     </execution>
 
                     <execution>
@@ -81,6 +74,22 @@
                         <goals>
                             <goal>synchronizeGitignore</goal>
                         </goals>
+                        <configuration>
+                            <psm>mvn:${project.groupId}:{{ lowerCase model.name }}{{ projectPostfix }}-model:${project.version}!model/${model-name}-psm.model</psm>
+                            <destination>${basedir}/target/generated-sources</destination>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>reset-psm-rest-checksums</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>resetChecksum</goal>
+                        </goals>
+                        <configuration>
+                            <psm>mvn:${project.groupId}:{{ lowerCase model.name }}{{ projectPostfix }}-model:${project.version}!model/${model-name}-psm.model</psm>
+                            <destination>${basedir}/target/generated-sources</destination>
+                        </configuration>
                     </execution>
 
                     <execution>
@@ -89,6 +98,10 @@
                         <goals>
                             <goal>checksum</goal>
                         </goals>
+                        <configuration>
+                            <psm>mvn:${project.groupId}:{{ lowerCase model.name }}{{ projectPostfix }}-model:${project.version}!model/${model-name}-psm.model</psm>
+                            <destination>${basedir}/target/generated-sources</destination>
+                        </configuration>
                     </execution>
 
                 </executions>

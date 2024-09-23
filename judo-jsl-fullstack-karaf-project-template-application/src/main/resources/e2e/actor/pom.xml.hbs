@@ -40,23 +40,6 @@
                         <groupId>hu.blackbelt.judo.meta</groupId>
                         <artifactId>judo-ui-generator-maven-plugin</artifactId>
                         <version>${judo-meta-ui-version}</version>
-                        <configuration>
-                            <uris>
-                                <uri>mvn:hu.blackbelt.judo.generator:judo-ui-playwright-e2e-template:${judo-ui-e2e-template-version}</uri>
-                            </uris>
-                            <type>playwright-e2e</type>
-                            <scanPackages>
-                                hu.blackbelt.judo.generator.commons,
-                                hu.blackbelt.judo.ui.generator.react,
-                                hu.blackbelt.judo.ui.generator.typescript.rest.commons,
-                                hu.blackbelt.judo.ui.generator.playwright
-                            </scanPackages>
-                            <applications>
-                                ${actor-name}
-                            </applications>
-                            <ui>${ui-model}</ui>
-                            <destination>${generation-target}</destination>
-                        </configuration>
                         <executions>
                             <execution>
                                 <id>execute-ui-e2e-template-generation</id>
@@ -65,35 +48,62 @@
                                     <goal>generate</goal>
                                 </goals>
                                 <configuration>
+                                    <uris>
+                                        <uri>mvn:hu.blackbelt.judo.generator:judo-ui-playwright-e2e-template:${judo-ui-e2e-template-version}</uri>
+                                    </uris>
+                                    <type>playwright-e2e</type>
+                                    <scanPackages>
+                                        hu.blackbelt.judo.generator.commons,
+                                        hu.blackbelt.judo.ui.generator.react,
+                                        hu.blackbelt.judo.ui.generator.typescript.rest.commons,
+                                        hu.blackbelt.judo.ui.generator.playwright
+                                    </scanPackages>
+                                    <applications>
+                                        ${actor-name}
+                                    </applications>
+                                    <ui>${ui-model}</ui>
+                                    <destination>${generation-target}</destination>
                                     <validateChecksum>${validateChecksum}</validateChecksum>
                                 </configuration>
                             </execution>
 
                             <execution>
-                                <id>synchronize-execute-ui-e2e-template-gitignore</id>
+                                <id>synchronize-ui-e2e-template-gitignore</id>
                                 <phase>process-sources</phase>
                                 <goals>
                                     <goal>synchronizeGitignore</goal>
                                 </goals>
+                                <configuration>
+                                    <ui>${ui-model}</ui>
+                                    <destination>${generation-target}</destination>
+                                </configuration>
                             </execution>
 
                             <execution>
-                                <id>reset-execute-ui-e2e-template-checksums</id>
+                                <id>reset-ui-e2e-template-checksums</id>
                                 <phase>process-sources</phase>
                                 <goals>
                                     <goal>resetChecksum</goal>
                                 </goals>
+                                <configuration>
+                                    <ui>${ui-model}</ui>
+                                    <destination>${generation-target}</destination>
+                                </configuration>
                             </execution>
 
                             <execution>
-                                <id>generate-execute-ui-e2e-template-checksum</id>
+                                <id>generate-ui-e2e-template-checksum</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>checksum</goal>
                                 </goals>
+                                <configuration>
+                                    <ui>${ui-model}</ui>
+                                    <destination>${generation-target}</destination>
+                                </configuration>
                             </execution>
-                        </executions>
 
+                        </executions>
                         <dependencies>
                             <dependency>
                                 <groupId>hu.blackbelt.judo.meta</groupId>
