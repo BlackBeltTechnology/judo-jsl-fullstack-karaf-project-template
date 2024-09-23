@@ -40,6 +40,23 @@
                         <groupId>hu.blackbelt.judo.meta</groupId>
                         <artifactId>judo-ui-generator-maven-plugin</artifactId>
                         <version>${judo-meta-ui-version}</version>
+                        <configuration>
+                            <uris>
+                                <uri>mvn:hu.blackbelt.judo.generator:judo-ui-playwright-e2e-template:${judo-ui-e2e-template-version}</uri>
+                            </uris>
+                            <type>playwright-e2e</type>
+                            <scanPackages>
+                                hu.blackbelt.judo.generator.commons,
+                                hu.blackbelt.judo.ui.generator.react,
+                                hu.blackbelt.judo.ui.generator.typescript.rest.commons,
+                                hu.blackbelt.judo.ui.generator.playwright
+                            </scanPackages>
+                            <applications>
+                                ${actor-name}
+                            </applications>
+                            <ui>${ui-model}</ui>
+                            <destination>${generation-target}</destination>
+                        </configuration>
                         <executions>
                             <execution>
                                 <id>execute-ui-e2e-template-generation</id>
@@ -48,25 +65,35 @@
                                     <goal>generate</goal>
                                 </goals>
                                 <configuration>
-                                    <uris>
-                                        <uri>mvn:hu.blackbelt.judo.generator:judo-ui-playwright-e2e-template:${judo-ui-e2e-template-version}</uri>
-                                    </uris>
-                                    <type>playwright-e2e</type>
-                                    <scanPackages>
-                                        hu.blackbelt.judo.generator.commons,
-                                        hu.blackbelt.judo.ui.generator.react,
-                                        hu.blackbelt.judo.ui.generator.typescript.rest.commons,
-                                        hu.blackbelt.judo.ui.generator.playwright
-                                    </scanPackages>
-                                    <applications>
-                                        ${actor-name}
-                                    </applications>
-                                    <ui>${ui-model}</ui>
                                     <validateChecksum>${validateChecksum}</validateChecksum>
-                                    <destination>${generation-target}</destination>
                                 </configuration>
                             </execution>
+
+                            <execution>
+                                <id>synchronize-execute-ui-e2e-template-gitignore</id>
+                                <phase>process-sources</phase>
+                                <goals>
+                                    <goal>synchronizeGitignore</goal>
+                                </goals>
+                            </execution>
+
+                            <execution>
+                                <id>reset-execute-ui-e2e-template-checksums</id>
+                                <phase>process-sources</phase>
+                                <goals>
+                                    <goal>resetChecksum</goal>
+                                </goals>
+                            </execution>
+
+                            <execution>
+                                <id>generate-execute-ui-e2e-template-checksum</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>checksum</goal>
+                                </goals>
+                            </execution>
                         </executions>
+
                         <dependencies>
                             <dependency>
                                 <groupId>hu.blackbelt.judo.meta</groupId>
@@ -89,42 +116,6 @@
                                 <version>${judo-ui-e2e-template-version}</version>
                             </dependency>
                         </dependencies>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>generate-build-checksum</id>
-            <activation>
-                <property>
-                    <name>!skipChecksumGeneration</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>hu.blackbelt.judo.meta</groupId>
-                        <artifactId>judo-ui-generator-maven-plugin</artifactId>
-                        <version>${judo-meta-ui-version}</version>
-                        <configuration>
-                            <applications>
-                                ${actor-name}
-                            </applications>
-                            <ui>${ui-model}</ui>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>execute-e2e-checksum</id>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>checksum</goal>
-                                </goals>
-                                <configuration>
-                                    <destination>${generation-target}</destination>
-                                </configuration>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>

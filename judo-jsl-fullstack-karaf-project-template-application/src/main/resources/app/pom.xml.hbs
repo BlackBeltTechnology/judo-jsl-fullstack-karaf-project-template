@@ -41,12 +41,40 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>execute-psm-sdk-generation</id>
+                        <id>reset-psm-app-checksums</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>resetChecksum</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>execute-psm-app-generation</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
+                        <configuration>
+                            <validateChecksum>${validateChecksum}</validateChecksum>
+                        </configuration>
                     </execution>
+
+                    <execution>
+                        <id>synchronize-psm-app-gitignore</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>synchronizeGitignore</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>generate-psm-app-checksum</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>checksum</goal>
+                        </goals>
+                    </execution>
+
                 </executions>
             </plugin>
 

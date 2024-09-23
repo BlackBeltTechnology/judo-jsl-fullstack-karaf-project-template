@@ -47,12 +47,37 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>execute-psm-sdk-generation</id>
+                        <id>reset-psm-internal-checksums</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>resetChecksum</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>execute-psm-internal-generation</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
                     </execution>
+
+                    <execution>
+                        <id>synchronize-internal-sdk-gitignore</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>synchronizeGitignore</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>generate-internal-sdk-checksum</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>checksum</goal>
+                        </goals>
+                    </execution>
+
                 </executions>
             </plugin>
 
