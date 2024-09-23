@@ -24,30 +24,7 @@
                 <groupId>hu.blackbelt.judo.meta</groupId>
                 <artifactId>judo-psm-generator-maven-plugin</artifactId>
                 <version>${judo-meta-psm-version}</version>
-                <configuration>
-                    <psm>mvn:${project.groupId}:{{ lowerCase model.name }}{{ projectPostfix }}-model:${project.version}!model/${model-name}-psm.model</psm>
-                    <destination>${basedir}/src/main/java</destination>
-                    <uris>
-                        <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-sdk-core-common:${judo-psm-generator-sdk-core-version}</uri>
-                        <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-sdk-core-empty-custom-operation-osgi:${judo-psm-generator-sdk-core-version}</uri>
-                    </uris>
-                    <type>psm-sdk-core</type>
-                    <templateParameters>
-                        <apiPrefix>${project.groupId}.{{ lowerCase model.name }}.api</apiPrefix>
-                        <operationPrefix>${project.groupId}.{{ lowerCase model.name }}.operation</operationPrefix>
-                        <osgiPrefix>${project.groupId}.{{ lowerCase model.name }}.osgi</osgiPrefix>
-                        <emptyCustomOperationOsgiPrefix>${project.groupId}.{{ lowerCase model.name }}.custom</emptyCustomOperationOsgiPrefix>
-                    </templateParameters>
-                </configuration>
                 <executions>
-                    <execution>
-                        <id>reset-psm-app-checksums</id>
-                        <phase>process-sources</phase>
-                        <goals>
-                            <goal>resetChecksum</goal>
-                        </goals>
-                    </execution>
-
                     <execution>
                         <id>execute-psm-app-generation</id>
                         <phase>generate-sources</phase>
@@ -55,6 +32,19 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <psm>mvn:${project.groupId}:{{ lowerCase model.name }}{{ projectPostfix }}-model:${project.version}!model/${model-name}-psm.model</psm>
+                            <destination>${basedir}/src/main/java</destination>
+                            <uris>
+                                <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-sdk-core-common:${judo-psm-generator-sdk-core-version}</uri>
+                                <uri>mvn:hu.blackbelt.judo.generator:judo-psm-generator-sdk-core-empty-custom-operation-osgi:${judo-psm-generator-sdk-core-version}</uri>
+                            </uris>
+                            <type>psm-sdk-core</type>
+                            <templateParameters>
+                                <apiPrefix>${project.groupId}.{{ lowerCase model.name }}.api</apiPrefix>
+                                <operationPrefix>${project.groupId}.{{ lowerCase model.name }}.operation</operationPrefix>
+                                <osgiPrefix>${project.groupId}.{{ lowerCase model.name }}.osgi</osgiPrefix>
+                                <emptyCustomOperationOsgiPrefix>${project.groupId}.{{ lowerCase model.name }}.custom</emptyCustomOperationOsgiPrefix>
+                            </templateParameters>
                             <validateChecksum>${validateChecksum}</validateChecksum>
                         </configuration>
                     </execution>
@@ -65,14 +55,34 @@
                         <goals>
                             <goal>synchronizeGitignore</goal>
                         </goals>
+                        <configuration>
+                            <psm>mvn:${project.groupId}:{{ lowerCase model.name }}{{ projectPostfix }}-model:${project.version}!model/${model-name}-psm.model</psm>
+                            <destination>${basedir}/src/main/java</destination>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>reset-psm-app-checksums</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>resetChecksum</goal>
+                        </goals>
+                        <configuration>
+                            <psm>mvn:${project.groupId}:{{ lowerCase model.name }}{{ projectPostfix }}-model:${project.version}!model/${model-name}-psm.model</psm>
+                            <destination>${basedir}/src/main/java</destination>
+                        </configuration>
                     </execution>
 
                     <execution>
                         <id>generate-psm-app-checksum</id>
-                        <phase>package</phase>
+                        <phase>compile</phase>
                         <goals>
                             <goal>checksum</goal>
                         </goals>
+                        <configuration>
+                            <psm>mvn:${project.groupId}:{{ lowerCase model.name }}{{ projectPostfix }}-model:${project.version}!model/${model-name}-psm.model</psm>
+                            <destination>${basedir}/src/main/java</destination>
+                        </configuration>
                     </execution>
 
                 </executions>
