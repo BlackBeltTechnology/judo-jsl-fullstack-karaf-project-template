@@ -16,6 +16,9 @@ USAGE: judo.sh COMMANDS... [OPTIONS...]
     generate                                Generate application based on model in JUDO project.
         -i --ignore-checksum                Ignores checksum errors and updates checksums according to new sources.
 
+    generate-root                           Generate application root structure on model in JUDO project.
+        -i --ignore-checksum                Ignores checksum errors and updates checksums according to new sources.
+
     dump                                    Dump postgresql db data before clearing and starting application.
     import                                  Import postgresql db data
         -dn --dump-name                     Import dump name when it's not defined loaded the last one
@@ -113,6 +116,7 @@ parse_command_args () {
                 ;;
             update)                         currentcommand="update"; update=1; shift 1;;
             generate)                       currentcommand="generate"; generate=1; shift 1;;
+            generate-root)                  currentcommand="generate-root"; generateRoot=1; shift 1;;
             dump)                           currentcommand="dump"; dump=1; shift 1;;
             import)                         currentcommand="import"; import=1; shift 1;;
             build)                          currentcommand="build"; build=1; shift 1;;
@@ -131,7 +135,7 @@ parse_command_args () {
         esac
 
         if [ $# -eq 0 ]; then :
-        elif [[ $1 =~ ^(env|clean|reset-checksum|prune|update|generate|dump|import|build|reckless|start|stop|status|schema-upgrade)$ ]]; then :
+        elif [[ $1 =~ ^(env|clean|prune|update|generate|generate-root|dump|import|build|reckless|start|stop|status|schema-upgrade)$ ]]; then :
         elif [ "${currentcommand}" == "update" ]; then
             case "$1" in
                 -i | --ignore-checksum)         ignoreUpdateChecksum=1; shift 1;;
@@ -143,6 +147,15 @@ parse_command_args () {
             esac
 
         elif [ "${currentcommand}" == "generate" ]; then
+            case "$1" in
+                -i | --ignore-checksum)         ignoreGenerateChecksum=1; shift 1;;
+                *)
+                    echo "Illegal option: $1 for command: $currentcommand"
+                    print-help
+                    exit 22
+                    ;;
+            esac
+        elif [ "${currentcommand}" == "generate-root" ]; then
             case "$1" in
                 -i | --ignore-checksum)         ignoreGenerateChecksum=1; shift 1;;
                 *)
@@ -930,6 +943,7 @@ schemaCliBuilding=0
 update=0
 pruneFrontend=0
 generate=0
+generateRoot=0
 buildKaraf=1
 buildModel=1
 buildBackend=1
@@ -1075,14 +1089,25 @@ if [ $update -eq 1 ]; then
     sdk selfupdate
     sdk env install
     sdk env
+    mvnd --purge --stop
     mvnargs="-DgenerateRoot -DskipApplicationBuild -DupdateJudoVersions=true"
     if [ $ignoreUpdateChecksum -eq 1 ]; then
         mvnargs="$mvnargs -DvalidateChecksum=false"
     fi
-    mvnd clean compile $mvnargs -f ${MODEL_DIR} -U || exit
+    mvnd clean compile $mvnargs -f ${MODEL_DIR} -U ; exit $?
+fi
+
+if [ $generateRoot -eq 1 ]; then
+    mvnd --purge --stop
+    mvnargs="-DgenerateRoot -DskipApplicationBuild"
+    if [ $ignoreGenerateChecksum -eq 1 ]; then
+        mvnargs="$mvnargs -DvalidateChecksum=false"
+    fi
+    mvnd clean compile $mvnargs -f ${MODEL_DIR} -U ; exit $?
 fi
 
 if [ $generate -eq 1 ]; then
+    mvnd --purge --stop
     mvnargs="-DgenerateApplication -DskipApplicationBuild"
     if [ $ignoreGenerateChecksum -eq 1 ]; then
         mvnargs="$mvnargs -DvalidateChecksum=false"
