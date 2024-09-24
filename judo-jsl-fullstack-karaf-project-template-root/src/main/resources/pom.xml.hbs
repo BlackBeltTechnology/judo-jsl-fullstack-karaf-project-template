@@ -213,7 +213,7 @@
                                 <configuration>
                                     <sources>${jslSources}</sources>
                                     <destination>${basedir}</destination>
-                                    <ignoredFiles>judo.sh</ignoredFiles>
+                                    <ignoredFiles>pom.xml,**/pom.xml,judo.sh</ignoredFiles>
                                 </configuration>
                             </execution>
 
@@ -319,6 +319,7 @@
                                 <configuration>
                                     <sources>${jslSources}</sources>
                                     <destination>${basedir}/application</destination>
+                                    <ignoredFiles>pom.xml,**/pom.xml</ignoredFiles>
                                 </configuration>
                             </execution>
 
