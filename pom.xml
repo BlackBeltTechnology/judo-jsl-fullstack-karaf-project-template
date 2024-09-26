@@ -39,8 +39,8 @@
         <log4j.configuration>log4j.properties</log4j.configuration>
 
         <judo-generator-commons-version>1.0.0.20240923_095240_119ac3cd_develop</judo-generator-commons-version>
-        <judo-meta-jsl-version>1.0.3.20240924_131227_3d1a936c_develop</judo-meta-jsl-version>
-        <judo-tatami-jsl-version>1.1.4.20240924_143312_5018f4bf_develop</judo-tatami-jsl-version>
+        <judo-meta-jsl-version>1.0.3.20240925_122018_18faac23_develop</judo-meta-jsl-version>
+        <judo-tatami-jsl-version>1.1.4.20240925_123839_d083041f_develop</judo-tatami-jsl-version>
         <judo-version-updater-maven-plugin-version>1.0.0.20240904_153753_942f0b2d_develop</judo-version-updater-maven-plugin-version>
 
         <surefire-version>3.0.0-M7</surefire-version>
