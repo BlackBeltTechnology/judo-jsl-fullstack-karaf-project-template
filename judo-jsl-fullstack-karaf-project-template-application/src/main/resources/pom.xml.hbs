@@ -6,12 +6,12 @@
     <packaging>pom</packaging>
 
     <properties>
-        <surefire-version>3.0.0</surefire-version>
+        <surefire-version>3.5.1</surefire-version>
 
         <!--suppress UnresolvedMavenProperty -->
         <logback-test-config>${maven.multiModuleProjectDirectory}/logback-test.xml</logback-test-config>
 
-        <slf4j-version>2.0.7</slf4j-version>
+        <slf4j-version>2.0.16</slf4j-version>
         <karaf-version>4.4.5</karaf-version>
 
         {{> pom.xml.model-properties-definition.fragment.hbs }}
@@ -58,7 +58,7 @@
                         <dependency>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.18.30</version>
+                            <version>1.18.34</version>
                         </dependency>
                     </dependencies>
                     {{ else javaCompiler }}
@@ -398,7 +398,7 @@
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.4.11</version>
+                <version>1.5.12</version>
             </dependency>
             {{> pom.xml.extra-dependency-management.fragment.hbs }}
         </dependencies>
