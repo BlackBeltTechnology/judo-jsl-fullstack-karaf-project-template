@@ -25,8 +25,16 @@ public class StoredVariableHelper extends StaticMethodValueResolver {
     public static final String GENERATE_DOCKER_MODULE = "generateDockerModule";
     public static final String GENERATE_INTERCEPTOR_MODULE = "generateInterceptorModule";
     public static final String GENERATE_SCHEMA_MODULE = "generateSchemaModule";
+    public static final String GENERATE_KEYCLOAK_THEME = "generateKeycloakTheme";
     public static final String GENERATE_KARAF_MODULE = "generateKarafModule";
     public static final String GENERATE_LAUNCHER_MODULE = "generateLauncherModule";
+    public static final String GENERATE_SINGLE_ACTOR_APPLICATION = "generateSingleActorApplication";
+    public static final String GENERATE_WEBROOT_MODULE = "generateWebrootModule";
+    public static final String GENERATE_DEFAULT_WEBROOT_CONTENT = "generateWebrootContent";
+    public static final String GENERATE_OPEN_API_ANNOTATIONS = "generateOpenApiAnnotations";
+    public static final String BASE_URL = "baseUrl";
+    public static final String AUTHENTICATION_URL = "authenticationUrl";
+    public static final String SPECIFICATION_VERSION_NUMBER = "specificationVersionNumber";
 
     public static void bindContext(Map<String, ?> context) {
         ThreadLocalContextHolder.bindContext(context);
@@ -58,6 +66,13 @@ public class StoredVariableHelper extends StaticMethodValueResolver {
             return true;
         }
         return Boolean.parseBoolean((String) ThreadLocalContextHolder.getVariable(GENERATE_SCHEMA_MODULE));
+    }
+
+    public static synchronized Boolean shouldGenerateKeycloakTheme() {
+        if (ThreadLocalContextHolder.getVariable(GENERATE_KEYCLOAK_THEME) == null) {
+            return false;
+        }
+        return Boolean.parseBoolean((String) ThreadLocalContextHolder.getVariable(GENERATE_KEYCLOAK_THEME));
     }
 
     public static synchronized Boolean shouldGenerateKarafModule() {
@@ -116,4 +131,51 @@ public class StoredVariableHelper extends StaticMethodValueResolver {
         return Boolean.parseBoolean((String) ThreadLocalContextHolder.getVariable(GENERATE_FRONTEND_MODULE));
     }
 
+    public static synchronized Boolean shouldGenerateSingleActorApplication() {
+        if (ThreadLocalContextHolder.getVariable(GENERATE_WEBROOT_MODULE) != null &&
+                Boolean.parseBoolean((String) ThreadLocalContextHolder.getVariable(GENERATE_DEFAULT_WEBROOT_CONTENT))) {
+            throw new IllegalArgumentException("Do not use 'generateSingleActorApplication' with 'generateWebrootModule'");
+        }
+
+        if (ThreadLocalContextHolder.getVariable(GENERATE_SINGLE_ACTOR_APPLICATION) == null) {
+            return false;
+        }
+        return Boolean.parseBoolean((String) ThreadLocalContextHolder.getVariable(GENERATE_SINGLE_ACTOR_APPLICATION));
+    }
+
+    public static synchronized Boolean shouldGenerateWebrootModule() {
+        if (shouldGenerateSingleActorApplication()) {
+            return false;
+        }
+        if (ThreadLocalContextHolder.getVariable(GENERATE_WEBROOT_MODULE) == null) {
+            return true;
+        }
+        return Boolean.parseBoolean((String) ThreadLocalContextHolder.getVariable(GENERATE_WEBROOT_MODULE));
+    }
+
+    public static synchronized Boolean shouldGenerateDefaultWebrootContent() {
+        if (!shouldGenerateWebrootModule()) {
+            return false;
+        }
+        if (ThreadLocalContextHolder.getVariable(GENERATE_DEFAULT_WEBROOT_CONTENT) == null) {
+            return true;
+        }
+        return Boolean.parseBoolean((String) ThreadLocalContextHolder.getVariable(GENERATE_DEFAULT_WEBROOT_CONTENT));
+    }
+
+    public static synchronized Boolean isGenerateOpenApiAnnotations() {
+        return Boolean.parseBoolean((String) ThreadLocalContextHolder.getVariable(GENERATE_OPEN_API_ANNOTATIONS));
+    }
+
+    public static synchronized String getBaseUrl() {
+        return (String) ThreadLocalContextHolder.getVariable(BASE_URL);
+    }
+
+    public static synchronized String getAuthenticationUrl() {
+        return (String) ThreadLocalContextHolder.getVariable(AUTHENTICATION_URL);
+    }
+
+    public static synchronized String getSpecificationVersionNumber() {
+        return (String) ThreadLocalContextHolder.getVariable(SPECIFICATION_VERSION_NUMBER);
+    }
 }

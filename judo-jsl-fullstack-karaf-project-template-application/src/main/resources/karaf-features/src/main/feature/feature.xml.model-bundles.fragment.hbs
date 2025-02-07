@@ -1,29 +1,33 @@
 <!-- To define create 'karaf-features/src/main/feature/feature.xml.model-bundles.fragment.hbs' file -->
 {{# if shouldGenerateModelModule }}
-<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-model/${project.version}</bundle>
+    <bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-model/${project.version}</bundle>
+    <bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-model/${project.version}/jar/script2operation</bundle>
 {{/ if }}
 {{# if shouldGenerateRestModule }}
-<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-rest/${project.version}</bundle>
+    <bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-rest/${project.version}</bundle>
 {{/ if }}
 {{# if shouldGenerateSdkModule }}
-<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-sdk/${project.version}</bundle>
+    <bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-sdk/${project.version}</bundle>
 {{/ if }}
 {{# if shouldGenerateInternalModule }}
-<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-internal/${project.version}</bundle>
+    <bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-internal/${project.version}</bundle>
 {{/ if }}
 {{# if shouldGenerateApplicationModule }}
-<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-app/${project.version}</bundle>
+    <bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-app/${project.version}</bundle>
 {{/ if }}
 {{# if shouldGenerateInterceptorModule }}
-<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-interceptors/${project.version}</bundle>
+    <bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-interceptors/${project.version}</bundle>
+{{/ if }}
+{{# if shouldGenerateWebrootModule }}
+    <bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-web-root/${project.version}</bundle>
 {{/ if }}
 
 {{# if shouldGenerateFrontendModule }}
-{{# each actorTypes as |actorType| }}
-    {{# each (resolveFrontendType frontendType) as |frontendName| }}
-<bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-frontend-{{ frontendName }}-{{ pathName actorType.fQName }}/${project.version}</bundle>
+    {{# each actorTypes as |actorType| }}
+        {{# each (resolveFrontendType frontendType) as |frontendName| }}
+            <bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-frontend-{{ frontendName }}-{{ pathName actorType.fQName }}/${project.version}</bundle>
+        {{/ each }}
     {{/ each }}
-{{/ each }}
 {{/ if }}
 
 <!-- End of 'karaf-features/src/main/feature/feature.xml.model-bundles.fragment.hbs' -->
