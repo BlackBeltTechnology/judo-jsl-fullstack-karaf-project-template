@@ -1,7 +1,6 @@
 <!-- To define create 'karaf-features/src/main/feature/feature.xml.model-bundles.fragment.hbs' file -->
 {{# if shouldGenerateModelModule }}
     <bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-model/${project.version}</bundle>
-    <bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-model/${project.version}/jar/script2operation</bundle>
 {{/ if }}
 {{# if shouldGenerateRestModule }}
     <bundle>mvn:{{ groupId }}/{{ lowerCase model.name }}{{ projectPostfix }}-rest/${project.version}</bundle>
