@@ -9,22 +9,32 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>hu.blackbelt.judo.tatami</groupId>
-                <artifactId>judo-tatami-client-workflow-maven-plugin</artifactId>
-                <version>${judo-tatami-client-version}</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
                 <executions>
                     <execution>
-                        <id>execute-ui-transformation</id>
-                        <phase>compile</phase>
+                        <id>unpack</id>
+                        <phase>process-resources</phase>
                         <goals>
-                            <goal>default-workflow</goal>
+                            <goal>unpack</goal>
                         </goals>
                         <configuration>
-                            <esm>{{# if esmModel }}{{ esmModel }}{{ else }}${maven.multiModuleProjectDirectory}/model/${model-name}.model{{/ if}}</esm>
-                            <destination>${basedir}</destination>
-                            <validateModels>false</validateModels>
-                            <saveModels>true</saveModels>
-                            <useCache>${useCache}</useCache>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>{{ groupId }}</groupId>
+                                    <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-model</artifactId>
+                                    <version>${project.version}</version>
+                                    <fileMappers>
+                                        <org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
+                                            <pattern>^\Qmodel/\E</pattern>
+                                            <replacement>./</replacement>
+                                        </org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
+                                    </fileMappers>
+                                    <outputDirectory>${project.basedir}/</outputDirectory>
+                                    <includes>**/*-ui.model</includes>
+                                </artifactItem>
+                            </artifactItems>
                         </configuration>
                     </execution>
                 </executions>

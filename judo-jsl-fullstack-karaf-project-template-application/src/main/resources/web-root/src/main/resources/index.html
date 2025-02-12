@@ -1,0 +1,81 @@
+<html>
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+
+  <!-- Bootstrap CSS -->
+  <link crossorigin="anonymous" href="bootstrap.min.css" integrity="sha384-tGQUUQvdXOeHeALd7em1aEDudtuY/VNTrALaWDiVbDEqISArllNrFulq2CAuv9T+" rel="stylesheet">
+  <link crossorigin="anonymous" href="bootstrap-table.min.css" rel="stylesheet">
+
+  <title>Hello, world!</title>
+</head>
+<body>
+<table class="table table-responsive table-stripped table-bordered"
+       id="table"
+       data-sort-name="url"
+       data-sort-order="asc"
+       data-filter-control="true">
+  <thead class="thead-dark">
+  <tr>
+    <th data-field="url" data-sortable="true" data-formatter="LinkFormatter" data-filter-control="input">URL</th>
+    <th data-field="overallResult" data-formatter="LinkFormatter2"  data-filter-control="input">Overall Result</th>
+    <th data-field="bundleSymbolicName" data-sortable="true" data-filter-control="input">Bundle Symbolic Name</th>
+    <th data-field="bundleName" data-sortable="true" data-filter-control="input">Bundle Name</th>
+    <th data-field="version" data-filter-control="input">Bundle Version</th>
+    <th data-field="bundleDescription" data-filter-control="input">Bundle Description</th>
+  </tr>
+  </thead>
+</table>
+
+<script crossorigin="anonymous" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" src="jquery-3.2.1.slim.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" src="popper.min.js"></script>
+<script crossorigin="anonymous" integrity="sha384-kPPy0VcLM6k7jfJCX0FRCT7O3o5MJ1wpVgYxFddq81jRRhHz0vCxHqT+8stQ60e2" src="bootstrap.min.js"></script>
+<script crossorigin="anonymous" src="bootstrap-table.min.js"></script>
+<script crossorigin="anonymous" src="bootstrap-table-filter-control.min.js"></script>
+<script type="text/javascript">
+    function makeid(length) {
+        let result = '';
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const charactersLength = characters.length;
+        let counter = 0;
+        while (counter < length) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+          counter += 1;
+        }
+        return result;
+    }
+
+    function LinkFormatter(value, row, index) {
+        return "<a href='"+row.url+"?refreshId="+makeid(10)+"'>"+value+"</a>";
+    }
+
+     function LinkFormatter2(value, row, index) {
+        let retUrl = "<a href='/system/health?tags="+row.modelName+"'>"+value+"</a>";
+        return retUrl;
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+        const res = await fetch('apps/application_list.json');
+        let data = await res.json();
+
+        try {
+            data = await Promise.all( data.map(async (d) => {
+            const modelName = d.modelName;
+            const fetched = await fetch(`/system/health?tags=${modelName}&format=json`)
+            const formatted = await fetched.json();
+            return {
+            overallResult: formatted.overallResult,
+            ...d};
+        }));
+        } catch(error) {
+          console.log(error);
+        }
+
+
+      $('#table').bootstrapTable({data});
+    });
+</script>
+
+</body>
+</html>

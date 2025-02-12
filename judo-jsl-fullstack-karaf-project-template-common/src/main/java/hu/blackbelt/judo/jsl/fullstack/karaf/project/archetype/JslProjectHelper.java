@@ -20,13 +20,14 @@ package hu.blackbelt.judo.jsl.fullstack.karaf.project.archetype;
  * #L%
  */
 
+import hu.blackbelt.judo.meta.jsl.jsldsl.ModelDeclaration;
 import com.github.jknack.handlebars.internal.lang3.StringUtils;
 import hu.blackbelt.judo.generator.commons.StaticMethodValueResolver;
 import hu.blackbelt.judo.generator.commons.annotations.TemplateHelper;
-import hu.blackbelt.judo.meta.jsl.jsldsl.ModelDeclaration;
 import hu.blackbelt.judo.meta.jsl.jsldsl.TransferDeclaration;
 import lombok.extern.java.Log;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -51,6 +52,16 @@ public class JslProjectHelper extends StaticMethodValueResolver {
                 .replaceAll("#", "__")
                 .replaceAll("/", "__")
                 .replaceAll("([a-z])([A-Z]+)", "$1_$2")
+                .toLowerCase();
+    }
+
+    public static String filePathName(String fqName) {
+        return fqName
+                .replaceAll("\\.", File.separator)
+                .replaceAll("::", File.separator)
+                .replaceAll("#", File.separator)
+                .replaceAll("/", File.separator)
+                .replaceAll("([a-z])([A-Z]+)", "$1" + File.separator + "$2")
                 .toLowerCase();
     }
 
@@ -152,5 +163,11 @@ public class JslProjectHelper extends StaticMethodValueResolver {
             return "";
         }
     }
+
+
+    public static String keycloakThemeFolder(ModelDeclaration modelDeclaration, String projectPostfix) {
+        return modelDeclaration.getName().toLowerCase() + (projectPostfix != null ? projectPostfix : "") + "-theme";
+    }
+
 
 }

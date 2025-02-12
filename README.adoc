@@ -53,6 +53,10 @@ It can be used as:
         <appVersion>1.0.0</appVersion>
         <defaultLanguage>en</defaultLanguage>
         <tablePageLimit>10</tablePageLimit>
+        <generateOpenApiAnnotations>true</generateOpenApiAnnotations>
+        <baseUrl>http://localhost:8181</baseUrl>
+        <authenticationUrl>http://localhost:8080</authenticationUrl>
+        <specificationVersionNumber>1.0.0</specificationVersionNumber>
     </properties>
 
     <build>
@@ -118,6 +122,10 @@ It can be used as:
                                 <defaultLanguage>${defaultLanguage}</defaultLanguage> <!-- optional, default: en-US -->
                                 <muiLicensePlan>${muiLicensePlan}</muiLicensePlan> <!-- optional, default: community -->
                                 <tablePageLimit>${tablePageLimit}</tablePageLimit> <!-- optional, default: 10 -->
+                                <generateOpenApiAnnotations>${generateOpenApiAnnotations}</generateOpenApiAnnotations> <!-- optional, default: false -->
+                                <baseUrl>${baseUrl}</baseUrl> <!-- optional, default: "" -->
+                                <authenticationUrl>${authenticationUrl}</authenticationUrl> <!-- optional, default: "" -->
+                                <specificationVersionNumber>${specificationVersionNumber}</specificationVersionNumber> <
                             </templateParameters>
                         </configuration>
                     </execution>
@@ -140,9 +148,8 @@ This example generates a complete project setup into `target/classes` directory.
 In a project this generation can be placed in the model project as a
 profile.
 
-The `judo-jsl-archetype-maven-plugin` documentation is placed inside
-the plugin documentation itself. https://github.com/BlackBeltTechnology/judo-jsl-archetype
+The `judo-jsl-generator-maven-plugin` documentation is placed inside
+the plugin documentation itself. https://github.com/BlackBeltTechnology/judo-meta-jsl
 
-<1> All the template parameters are mandatory, because that's used for
+<1> All the template parameters are mandatory (except where it is mentioned that can be optional), because that's used for
 project template's version definitions.
-

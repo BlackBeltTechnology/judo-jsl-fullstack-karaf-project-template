@@ -75,6 +75,13 @@
                         <frontendType>${frontendType}</frontendType>
                         <javaCompiler>ecj</javaCompiler>
 
+                        <generateInterceptorModule>true</generateInterceptorModule>
+                        <generateE2eModule>true</generateE2eModule>
+
+                        <generateOpenApiAnnotations>true</generateOpenApiAnnotations>
+                        <baseUrl>http://localhost:8181</baseUrl>
+                        <authenticationUrl>http://localhost:8080</authenticationUrl>
+                        <specificationVersionNumber>1.0.0</specificationVersionNumber>
                     </templateParameters>
 
                 </configuration>
@@ -155,16 +162,20 @@
                                 <judoTatamiClientVersion>${judo-tatami-client-version}</judoTatamiClientVersion>
 
                                 <judoMetaUiVersion>${judo-meta-ui-version}</judoMetaUiVersion>
+                                <judoUiE2eTemplateVersion>${judo-ui-e2e-template-version}</judoUiE2eTemplateVersion>
                                 <judoUiTypescriptRestTemplateVersion>${judo-ui-typescript-rest-template-version}</judoUiTypescriptRestTemplateVersion>
                                 <judoUiReactTemplateVersion>${judo-ui-react-template-version}</judoUiReactTemplateVersion>
                                 <frontendType>${frontendType}</frontendType>
                                 <javaCompiler>ecj</javaCompiler>
 
+                                <generateInterceptorModule>true</generateInterceptorModule>
+                                <generateE2eModule>true</generateE2eModule>
+                                <generateKeycloakTheme>true</generateKeycloakTheme>
+
                             </templateParameters>
                         </configuration>
                     </execution>
                 </executions>
-
             </plugin>
 
             <!--
