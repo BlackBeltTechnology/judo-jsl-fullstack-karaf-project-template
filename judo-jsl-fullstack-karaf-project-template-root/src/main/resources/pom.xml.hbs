@@ -319,7 +319,7 @@
                                 <configuration>
                                     <sources>${jslSources}</sources>
                                     <destination>${basedir}/application</destination>
-                                    <ignoredFiles>pom.xml,**/pom.xml</ignoredFiles>
+                                    <ignoredFiles>pom.xml,**/pom.xml,**/gitkeep,karaf-features/src/main/feature/feature.xml</ignoredFiles>
                                 </configuration>
                             </execution>
 
@@ -351,6 +351,7 @@
                 </plugins>
             </build>
         </profile>
+
         {{> pom.xml.extra-profiles.fragment.hbs }}
     </profiles>
     {{> pom.xml.repository-definition.fragment.hbs }}

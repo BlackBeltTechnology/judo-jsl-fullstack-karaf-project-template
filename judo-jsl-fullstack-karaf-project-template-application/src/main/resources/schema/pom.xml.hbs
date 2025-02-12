@@ -19,6 +19,8 @@
         <outputDirectory>${incrementalDirectory}</outputDirectory>
         <updateModelArtifactVersion>${project.version}</updateModelArtifactVersion>
         <updateModel>mvn:{{ groupId }}:{{ lowerCase model.name }}:${model-version}!model/${modelName}-rdbms_postgresql.model</updateModel>
+
+        {{> schema/pom.xml.extra-properties-definition.fragment.hbs }}
     </properties>
 
     <profiles>
@@ -139,6 +141,8 @@
                 </dependency>
             </dependencies>
 	    </profile>
+
+        {{> schema/pom.xml.extra-profiles.fragment.hbs }}
     </profiles>
 
     <build>

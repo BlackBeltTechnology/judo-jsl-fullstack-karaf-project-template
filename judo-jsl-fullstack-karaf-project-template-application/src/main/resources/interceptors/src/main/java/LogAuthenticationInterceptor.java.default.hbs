@@ -1,0 +1,63 @@
+package {{ groupId }}.interceptors;
+
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import hu.blackbelt.judo.meta.asm.runtime.AsmUtils;
+import hu.blackbelt.judo.runtime.core.accessmanager.api.AuthenticationInterceptor;
+import hu.blackbelt.judo.runtime.core.accessmanager.api.SignedIdentifier;
+import org.eclipse.emf.ecore.EOperation;
+import org.osgi.service.component.annotations.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Component(property = { "judo.model.name={{ model.name }}" })
+public class LogAuthenticationInterceptor implements AuthenticationInterceptor {
+
+private static final Logger log = LoggerFactory.getLogger(AuthenticationInterceptor.class);
+
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
+
+    public boolean isSuitableForOperation(EOperation operation,
+                                    final String claim,
+                                    final String realm,
+                                    final String client,
+                                    Map<String, Object> attributes) {
+        return true;
+    }
+
+    public void authenticate(final String operationFQName,
+                    final Map<String, Object> exchange,
+                    final String claim,
+                    final String realm,
+                    final String client,
+                    final Map<String, Object> attributes) {
+            log.info("*** ⬇️ INTERCEPTED AUTHENTICATION OPERATION ⬇️ ***");
+            log.info("OPERATION:" + operationFQName + " Claim: " + claim + " Realm: " + realm + " Client: " + client +
+                    " Attributes: \n\t" +
+                    attributes.entrySet().stream()
+                            .map(e -> e.getKey() + " = " + (e.getValue() == null ? "" : e.getValue().toString()))
+                            .collect(Collectors.joining("\n\t")));
+            log.info("*** ⬆️ INTERCEPTED AUTHENTICATION OPERATION ⬆️ ***");
+    }
+
+    public void success(final EOperation operation,
+                    final SignedIdentifier signedIdentifier,
+                    final Map<String, Object> exchange,
+                    final String claim,
+                    final String realm,
+                    final String client,
+                    final Map<String, Object> attributes) {
+            String operationFQName = AsmUtils.getOperationFQName(operation);
+            log.info("*** ⬇️ INTERCEPTED AUTHORIZATION OPERATION ⬇️ ***");
+            log.info("OPERATION:" + operationFQName + " Claim: " + claim + " Realm: " + realm + " Client: " + client +
+                    " Attributes: \n\t" +
+                    attributes.entrySet().stream()
+                            .map(e -> e.getKey() + " = " + (e.getValue() == null ? "" : e.getValue().toString()))
+                            .collect(Collectors.joining("\n\t")));
+            log.info("*** ⬆️ INTERCEPTED AUTHORIZATION OPERATION ⬆️ ***");
+    }
+}
