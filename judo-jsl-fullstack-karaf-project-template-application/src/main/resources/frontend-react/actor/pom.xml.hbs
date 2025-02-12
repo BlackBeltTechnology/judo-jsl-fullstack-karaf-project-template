@@ -27,7 +27,15 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <configuration>
                     <instructions>
-                        <Web-ContextPath>/${model-name}{{ frontendTypePostfix frontendType '_react' }}/${actor-name}</Web-ContextPath>
+                        {{# if shouldGenerateSingleActorApplication }}
+                            {{# if singleApplicationPath }}
+                                <Web-ContextPath>{{ singleApplicationPath }}</Web-ContextPath>
+                            {{ else }}
+                                <Web-ContextPath>/</Web-ContextPath>
+                            {{/ if }}
+                        {{ else }}
+                            <Web-ContextPath>/${model-name}{{ frontendTypePostfix frontendType '_react' }}/${actor-name}</Web-ContextPath>
+                        {{/ if }}
                         <Include-Resource>
                             /=${project.basedir}/dist
                         </Include-Resource>
@@ -417,45 +425,47 @@
             </build>
         </profile>
 
-        <profile>
-            <id>replace-base-href</id>
-            <activation>
-                <property>
-                    <name>!local</name>
-                </property>
-            </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>com.google.code.maven-replacer-plugin</groupId>
-                        <artifactId>replacer</artifactId>
-                        <version>1.5.2</version>
-                        <executions>
-                            <execution>
-                                <id>frontend-index-url-replace</id>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>replace</goal>
-                                </goals>
-                                <configuration>
-                                    <basedir>${project.basedir}/dist</basedir>
-                                    <includes>
-                                        <include>index.html</include>
-                                    </includes>
-                                    <replacements>
-                                        <replacement>
-                                            <token><![CDATA[<base href="/">]]></token>
-                                            <value><![CDATA[<base href="/${model-name}{{ frontendTypePostfix frontendType '_react' }}/${actor-name}/">]]></value>
-                                        </replacement>
-                                    </replacements>
-                                    <regex>false</regex>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
+        {{# unless shouldGenerateSingleActorApplication }}
+            <profile>
+                <id>replace-base-href</id>
+                <activation>
+                    <property>
+                        <name>!local</name>
+                    </property>
+                </activation>
+                <build>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.google.code.maven-replacer-plugin</groupId>
+                            <artifactId>replacer</artifactId>
+                            <version>1.5.2</version>
+                            <executions>
+                                <execution>
+                                    <id>frontend-index-url-replace</id>
+                                    <phase>compile</phase>
+                                    <goals>
+                                        <goal>replace</goal>
+                                    </goals>
+                                    <configuration>
+                                        <basedir>${project.basedir}/dist</basedir>
+                                        <includes>
+                                            <include>index.html</include>
+                                        </includes>
+                                        <replacements>
+                                            <replacement>
+                                                <token><![CDATA[<base href="/">]]></token>
+                                                <value><![CDATA[<base href="/${model-name}{{ frontendTypePostfix frontendType '_react' }}/${actor-name}/">]]></value>
+                                            </replacement>
+                                        </replacements>
+                                        <regex>false</regex>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </build>
+            </profile>
+        {{/ unless }}
     </profiles>
 </project>
 

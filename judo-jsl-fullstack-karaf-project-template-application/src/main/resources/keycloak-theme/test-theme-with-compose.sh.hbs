@@ -1,0 +1,27 @@
+#!/bin/bash
+
+set -e
+
+# Variables
+VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+THEME_ZIP="target/{{ lowerCase model.name }}{{ projectPostfix }}-keycloak-theme-$VERSION-assets.zip"
+THEME_DIR="keycloak-themes"
+COMPOSE_FILE="docker-compose.yml"
+
+if [[ ! -f "$THEME_ZIP" ]]; then
+    echo "Error: Theme ZIP file ($THEME_ZIP) not found. Build the Maven module first."
+    exit 1
+fi
+
+if [[ -d "$THEME_DIR" ]]; then
+    echo "Cleaning up old theme directory ($THEME_DIR)..."
+    rm -rf "$THEME_DIR"
+fi
+
+echo "Extracting theme ZIP file ($THEME_ZIP) to directory ($THEME_DIR)..."
+unzip -q "$THEME_ZIP" -d "$THEME_DIR"
+
+echo "Starting Keycloak with Docker Compose..."
+docker compose -f "$COMPOSE_FILE" up
+
+echo "Keycloak is starting. Access it at http://localhost:8080"

@@ -63,6 +63,18 @@
                                 <apiPrefix>${project.groupId}.{{ lowerCase model.name }}.api</apiPrefix>
                                 <implPrefix>${project.groupId}.{{ lowerCase model.name }}.impl</implPrefix>
                                 <osgiPrefix>${project.groupId}.{{ lowerCase model.name }}.osgi</osgiPrefix>
+                                {{# if isGenerateOpenApiAnnotations }}
+                                <generateOpenApiAnnotations>true</generateOpenApiAnnotations>
+                                    {{# if getBaseUrl }}
+                                <baseUrl>{{ getBaseUrl }}</baseUrl>
+                                    {{/ if }}
+                                    {{# if getAuthenticationUrl }}
+                                <authenticationUrl>{{ getAuthenticationUrl }}</authenticationUrl>
+                                    {{/ if }}
+                                    {{# if getSpecificationVersionNumber }}
+                                <specificationVersionNumber>{{ getSpecificationVersionNumber }}</specificationVersionNumber>
+                                    {{/ if }}
+                                {{/ if }}
                             </templateParameters>
                             <validateChecksum>${validateChecksum}</validateChecksum>
                         </configuration>
@@ -125,28 +137,31 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>io.swagger.core.v3</groupId>
-                <artifactId>swagger-maven-plugin</artifactId>
-                <version>2.2.19</version>
-                <executions>
-                    <execution>
-                        <configuration>
-                            <outputFileName>openapi</outputFileName>
-                            <outputPath>${project.build.directory}/api-documentation-swagger</outputPath>
-                            <outputFormat>JSONANDYAML</outputFormat>
-                            <resourcePackages>
-                                <package>hu.blackbelt.judo.tatami.itests.{{ lowerCase model.name }}</package>
-                            </resourcePackages>
-                            <prettyPrint>TRUE</prettyPrint>
-                        </configuration>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>resolve</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
+            {{# if isGenerateOpenApiAnnotations }}
+                <plugin>
+                    <groupId>io.swagger.core.v3</groupId>
+                    <artifactId>swagger-maven-plugin</artifactId>
+                    <version>2.2.19</version>
+                    <executions>
+                        <execution>
+                            <configuration>
+                                <outputFileName>openapi</outputFileName>
+                                <outputPath>${project.build.directory}/api-documentation-swagger</outputPath>
+                                <outputFormat>JSONANDYAML</outputFormat>
+                                <resourcePackages>
+                                    <package>${project.groupId}.{{ lowerCase model.name }}</package>
+                                </resourcePackages>
+                                <prettyPrint>TRUE</prettyPrint>
+                            </configuration>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>resolve</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            {{/ if }}
         </plugins>
     </build>
 

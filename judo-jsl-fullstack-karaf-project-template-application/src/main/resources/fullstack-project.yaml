@@ -94,6 +94,19 @@ templates:
   # interceptor
   ###############################################
 
+
+  - name: interceptors/src/main/java/LogAuthenticationInterceptor
+    pathExpression: "'interceptors/src/main/java/'+ #filePathName(#groupId) + '/interceptors/LogAuthenticationInterceptor.java.default'"
+    templateName: interceptors/src/main/java/LogAuthenticationInterceptor.java.default.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateInterceptorModule()"
+
+  - name: interceptors/src/main/java/LogOperationCallInterceptor
+    pathExpression: "'interceptors/src/main/java/'+ #filePathName(#groupId) + '/interceptors/LogOperationCallInterceptor.java.default'"
+    templateName: interceptors/src/main/java/LogOperationCallInterceptor.java.default.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateInterceptorModule()"
+
   - name: interceptors/src/main/java/gitkeep
     pathExpression: "'interceptors/src/main/java/gitkeep'"
     templateName: interceptors/src/main/java/gitkeep
@@ -127,6 +140,73 @@ templates:
     templateName: interceptors/pom.xml.hbs
     actorTypeBased: false
     conditionExpression: "#shouldGenerateInterceptorModule()"
+
+  ###############################################
+  # web-root
+  ###############################################
+
+  - name: web-root/src/main/resources/bootstrap.min.css
+    pathExpression: "'web-root/src/main/resources/bootstrap.min.css'"
+    templateName: web-root/src/main/resources/bootstrap.min.css
+    actorTypeBased: false
+    copy: true
+    conditionExpression: '#shouldGenerateDefaultWebrootContent()'
+
+  - name: web-root/src/main/resources/bootstrap.min.js
+    pathExpression: "'web-root/src/main/resources/bootstrap.min.js'"
+    templateName: web-root/src/main/resources/bootstrap.min.js
+    actorTypeBased: false
+    copy: true
+    conditionExpression: '#shouldGenerateDefaultWebrootContent()'
+
+  - name: web-root/src/main/resources/bootstrap-table.min.js
+    pathExpression: "'web-root/src/main/resources/bootstrap-table.min.js'"
+    templateName: web-root/src/main/resources/bootstrap-table.min.js
+    actorTypeBased: false
+    copy: true
+    conditionExpression: '#shouldGenerateDefaultWebrootContent()'
+
+  - name: web-root/src/main/resources/bootstrap-table.min.css
+    pathExpression: "'web-root/src/main/resources/bootstrap-table.min.css'"
+    templateName: web-root/src/main/resources/bootstrap-table.min.css
+    actorTypeBased: false
+    copy: true
+    conditionExpression: '#shouldGenerateDefaultWebrootContent()'
+
+  - name: web-root/src/main/resources/bootstrap-table-filter-control.min.js
+    pathExpression: "'web-root/src/main/resources/bootstrap-table-filter-control.min.js'"
+    templateName: web-root/src/main/resources/bootstrap-table-filter-control.min.js
+    actorTypeBased: false
+    copy: true
+    conditionExpression: '#shouldGenerateDefaultWebrootContent()'
+
+  - name: web-root/src/main/resources/index.html
+    pathExpression: "'web-root/src/main/resources/index.html'"
+    templateName: web-root/src/main/resources/index.html
+    actorTypeBased: false
+    copy: true
+    conditionExpression: '#shouldGenerateDefaultWebrootContent()'
+
+  - name: web-root/src/main/resources/jquery-3.2.1.slim.min.js
+    pathExpression: "'web-root/src/main/resources/jquery-3.2.1.slim.min.js'"
+    templateName: web-root/src/main/resources/jquery-3.2.1.slim.min.js
+    actorTypeBased: false
+    copy: true
+    conditionExpression: '#shouldGenerateDefaultWebrootContent()'
+
+  - name: web-root/src/main/resources/popper.min.js
+    pathExpression: "'web-root/src/main/resources/popper.min.js'"
+    templateName: web-root/src/main/resources/popper.min.js
+    actorTypeBased: false
+    copy: true
+    conditionExpression: '#shouldGenerateDefaultWebrootContent()'
+
+  - name:  web-root/pom.xml
+    pathExpression: "'web-root/pom.xml'"
+    templateName: web-root/pom.xml.hbs
+    actorTypeBased: false
+    conditionExpression: '#shouldGenerateWebrootModule()'
+
 
   ###############################################
   # docker
@@ -203,6 +283,125 @@ templates:
     templateName: karaf-offline/pom.xml.hbs
     actorTypeBased: false
     conditionExpression: "#shouldGenerateKarafModule()"
+
+
+  ###############################################
+  # keycloak-theme
+  ###############################################
+
+  - name: keycloak-theme/docker-compose.yml
+    pathExpression: "'keycloak-theme/docker-compose.yml'"
+    templateName: keycloak-theme/docker-compose.yml.hbs
+    actorTypeBased: false
+    conditionExpression: '#shouldGenerateKeycloakTheme()'
+
+  - name: keycloak-theme/gitignore
+    pathExpression: "'keycloak-theme/.gitignore'"
+    templateName: keycloak-theme/gitignore
+    actorTypeBased: false
+    copy: true
+    conditionExpression: '#shouldGenerateKeycloakTheme()'
+
+  - name: keycloak-theme/pom.xml
+    pathExpression: "'keycloak-theme/pom.xml'"
+    templateName: keycloak-theme/pom.xml.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/README.adoc
+    pathExpression: "'keycloak-theme/README.adoc'"
+    templateName: keycloak-theme/README.adoc.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/test-theme-with-compose.sh
+    pathExpression: "'keycloak-theme/test-theme-with-compose.sh'"
+    templateName: keycloak-theme/test-theme-with-compose.sh.hbs
+    permission: rwxrwx---
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/test-users-realm.json
+    pathExpression: "'keycloak-theme/test-users-realm.json'"
+    templateName: keycloak-theme/test-users-realm.json.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/src/assembly/assembly.xml
+    pathExpression: "'keycloak-theme/src/assembly/assembly.xml'"
+    templateName: keycloak-theme/src/assembly/assembly.xml.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/src/main/resources/themes/keycloak-theme/login/error.ftl
+    pathExpression: "'keycloak-theme/src/main/resources/themes/' + #keycloakThemeFolder(#model, #projectPostfix) + '/login/error.ftl'"
+    templateName: keycloak-theme/src/main/resources/themes/keycloak-theme/login/error.ftl.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/src/main/resources/themes/keycloak-theme/login/footer.ftl
+    pathExpression: "'keycloak-theme/src/main/resources/themes/' + #keycloakThemeFolder(#model, #projectPostfix) + '/login/footer.ftl'"
+    templateName: keycloak-theme/src/main/resources/themes/keycloak-theme/login/footer.ftl.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/src/main/resources/themes/keycloak-theme/login/login.ftl
+    pathExpression: "'keycloak-theme/src/main/resources/themes/' + #keycloakThemeFolder(#model, #projectPostfix) + '/login/login.ftl'"
+    templateName: keycloak-theme/src/main/resources/themes/keycloak-theme/login/login.ftl.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/src/main/resources/themes/keycloak-theme/login/register.ftl
+    pathExpression: "'keycloak-theme/src/main/resources/themes/' + #keycloakThemeFolder(#model, #projectPostfix) + '/login/register.ftl'"
+    templateName: keycloak-theme/src/main/resources/themes/keycloak-theme/login/register.ftl.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/src/main/resources/themes/keycloak-theme/login/template.ftl
+    pathExpression: "'keycloak-theme/src/main/resources/themes/' + #keycloakThemeFolder(#model, #projectPostfix) + '/login/template.ftl'"
+    templateName: keycloak-theme/src/main/resources/themes/keycloak-theme/login/template.ftl.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/src/main/resources/themes/keycloak-theme/login/theme.properties
+    pathExpression: "'keycloak-theme/src/main/resources/themes/' + #keycloakThemeFolder(#model, #projectPostfix) + '/login/theme.properties'"
+    templateName: keycloak-theme/src/main/resources/themes/keycloak-theme/login/theme.properties.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/src/main/resources/themes/keycloak-theme/login/resources/css/login.css
+    pathExpression: "'keycloak-theme/src/main/resources/themes/' + #keycloakThemeFolder(#model, #projectPostfix) + '/login/resources/css/login.css'"
+    templateName: keycloak-theme/src/main/resources/themes/keycloak-theme/login/resources/css/login.css.hbs
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/src/main/resources/themes/keycloak-theme/login/resources/img/judo-color-logo.svg
+    pathExpression: "'keycloak-theme/src/main/resources/themes/' + #keycloakThemeFolder(#model, #projectPostfix) + '/login/resources/img/judo-color-logo.svg'"
+    templateName: keycloak-theme/src/main/resources/themes/keycloak-theme/login/resources/img/judo-color-logo.svg
+    copy: true
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/src/main/resources/themes/keycloak-theme/login/resources/img/keycloak-bg.png
+    pathExpression: "'keycloak-theme/src/main/resources/themes/' + #keycloakThemeFolder(#model, #projectPostfix) + '/login/resources/img/keycloak-bg.png'"
+    templateName: keycloak-theme/src/main/resources/themes/keycloak-theme/login/resources/img/keycloak-bg.png
+    copy: true
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/src/main/resources/themes/keycloak-theme/login/resources/img/keycloak-logo.png
+    pathExpression: "'keycloak-theme/src/main/resources/themes/' + #keycloakThemeFolder(#model, #projectPostfix) + '/login/resources/img/keycloak-logo.png'"
+    templateName: keycloak-theme/src/main/resources/themes/keycloak-theme/login/resources/img/keycloak-logo.png
+    copy: true
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
+
+  - name: keycloak-theme/src/main/resources/themes/keycloak-theme/login/resources/img/keycloak-logo-text.png
+    pathExpression: "'keycloak-theme/src/main/resources/themes/' + #keycloakThemeFolder(#model, #projectPostfix) + '/login/resources/img/keycloak-logo-text.png'"
+    templateName: keycloak-theme/src/main/resources/themes/keycloak-theme/login/resources/img/keycloak-logo-text.png
+    copy: true
+    actorTypeBased: false
+    conditionExpression: "#shouldGenerateKeycloakTheme()"
 
   ###############################################
   # model

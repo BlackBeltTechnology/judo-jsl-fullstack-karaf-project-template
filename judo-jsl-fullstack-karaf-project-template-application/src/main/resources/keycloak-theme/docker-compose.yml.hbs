@@ -1,0 +1,23 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:21.1.0
+    container_name: {{ lowerCase model.name }}{{ projectPostfix }}-keycloak-theme
+    command: >
+      start-dev
+      --http-port=8080
+      --import-realm
+      --spi-realm-import-file=/opt/keycloak/data/import/test-users-realm.json
+      --spi-theme-static-max-age=-1
+      --spi-theme-cache-themes=false
+      --spi-theme-cache-templates=false
+    environment:
+      KC_DB: dev-file
+      KC_HOSTNAME: localhost
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: judo
+      KC_TEMPLATE_CACHE: false
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./keycloak-themes:/opt/keycloak/themes
+      - ./test-users-realm.json:/opt/keycloak/data/import/test-users-realm.json
