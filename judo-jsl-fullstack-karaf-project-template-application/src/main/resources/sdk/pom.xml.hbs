@@ -46,6 +46,7 @@
                                 <operationPrefix>${project.groupId}.{{ lowerCase model.name }}.operation</operationPrefix>
                                 <generateOptionalTypes>true</generateOptionalTypes>
                                 <generatePayloadValidator>true</generatePayloadValidator>
+                                <identifierType>java.io.Serializable</identifierType>
                             </templateParameters>
                             <validateChecksum>${validateChecksum}</validateChecksum>
                         </configuration>
