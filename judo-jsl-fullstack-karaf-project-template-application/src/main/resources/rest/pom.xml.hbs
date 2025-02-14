@@ -63,6 +63,7 @@
                                 <apiPrefix>${project.groupId}.{{ lowerCase model.name }}.api</apiPrefix>
                                 <implPrefix>${project.groupId}.{{ lowerCase model.name }}.impl</implPrefix>
                                 <osgiPrefix>${project.groupId}.{{ lowerCase model.name }}.osgi</osgiPrefix>
+                                <identifierType>java.io.Serializable</identifierType>
                                 {{# if isGenerateOpenApiAnnotations }}
                                 <generateOpenApiAnnotations>true</generateOpenApiAnnotations>
                                     {{# if getBaseUrl }}
