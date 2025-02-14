@@ -51,6 +51,7 @@
                                 <osgiPrefix>${project.groupId}.{{ lowerCase model.name }}.osgi</osgiPrefix>
                                 <generateOptionalTypes>true</generateOptionalTypes>
                                 <generatePayloadValidator>true</generatePayloadValidator>
+                                <identifierType>java.io.Serializable</identifierType>
                             </templateParameters>
                             <validateChecksum>${validateChecksum}</validateChecksum>
                         </configuration>
