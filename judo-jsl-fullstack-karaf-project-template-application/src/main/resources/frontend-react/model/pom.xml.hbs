@@ -9,32 +9,26 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.6.1</version>
+                <groupId>hu.blackbelt.judo.tatami</groupId>
+                <artifactId>judo-tatami-jsl-workflow-maven-plugin</artifactId>
+                <version>${judo-tatami-jsl-version}</version>
                 <executions>
                     <execution>
-                        <id>unpack</id>
-                        <phase>process-resources</phase>
+                        <id>transform-jsl-file</id>
+                        <phase>generate-resources</phase>
                         <goals>
-                            <goal>unpack</goal>
+                            <goal>default-model-workflow</goal>
                         </goals>
                         <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>{{ groupId }}</groupId>
-                                    <artifactId>{{ lowerCase model.name }}{{ projectPostfix }}-model</artifactId>
-                                    <version>${project.version}</version>
-                                    <fileMappers>
-                                        <org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
-                                            <pattern>^\Qmodel/\E</pattern>
-                                            <replacement>./</replacement>
-                                        </org.codehaus.plexus.components.io.filemappers.RegExpFileMapper>
-                                    </fileMappers>
-                                    <outputDirectory>${project.basedir}/</outputDirectory>
-                                    <includes>**/*-ui.model</includes>
-                                </artifactItem>
-                            </artifactItems>
+                            <sources>{{# if modelDirectory }}{{ modelDirectory }}{{ else }}${maven.multiModuleProjectDirectory}/src/main/model{{/ if}}</sources>
+                            <modelVersion>${model-version}</modelVersion>
+                            <destination>${project.basedir}</destination>
+                            <validateModels>${validateModels}</validateModels>
+                            <useCache>${useCache}</useCache>
+                            <ignoreJsl2Psm>true</ignoreJsl2Psm>
+                            <ignorePsm2Asm>true</ignorePsm2Asm>
+                            <ignorePsm2Measure>true</ignorePsm2Measure>
+                            <ignoreJsl2Ui>false</ignoreJsl2Ui>
                         </configuration>
                     </execution>
                 </executions>
