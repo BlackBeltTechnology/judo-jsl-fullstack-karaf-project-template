@@ -26,6 +26,10 @@
                             osgi.service;effective:=active;objectClass=javax.ws.rs.ext.ExceptionMapper,
                             osgi.service;effective:=active;objectClass=org.apache.cxf.interceptor.Interceptor
                         </Provide-Capability>
+                    {{# if isGenerateOpenApiAnnotations }}
+                        <Include-Resource>api-documentation-swagger=${project.build.directory}/api-documentation-swagger</Include-Resource>
+                        <Openapi-Content>api-documentation-swagger</Openapi-Content>
+                    {{/ if }}
                     </instructions>
                 </configuration>
             </plugin>
