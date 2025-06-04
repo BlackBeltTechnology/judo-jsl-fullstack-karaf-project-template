@@ -38,10 +38,10 @@
         <slf4j-version>2.0.16</slf4j-version>
         <log4j.configuration>log4j.properties</log4j.configuration>
 
-        <judo-generator-commons-version>1.0.0.20250601_195956_b3f17599_feature_JNG_6310_UpdateEpsilon</judo-generator-commons-version>
-        <judo-meta-jsl-version>1.0.3.20250602_090711_ac699c33_feature_JNG_6310_UpdateEpsilon</judo-meta-jsl-version>
-        <judo-tatami-jsl-version>1.1.4.20250602_123155_fee06a7b_feature_JNG_6310_UpdateEpsilon</judo-tatami-jsl-version>
-        <judo-version-updater-maven-plugin-version>1.0.0.20250601_200044_5d653ddc_feature_JNG_6310_UpdateEpsilon</judo-version-updater-maven-plugin-version>
+        <judo-generator-commons-version>1.0.0.20250604_005413_e4565e35_feature_JNG_6310_UpdateEpsilon</judo-generator-commons-version>
+        <judo-meta-jsl-version>1.0.3.20250604_124536_705a4357_feature_JNG_6310_UpdateEpsilon</judo-meta-jsl-version>
+        <judo-tatami-jsl-version>1.1.4.20250604_175142_a1b955a4_feature_JNG_6310_UpdateEpsilon</judo-tatami-jsl-version>
+        <judo-version-updater-maven-plugin-version>1.0.0.20250604_120601_01ff8bb0_feature_JNG_6310_UpdateEpsilon</judo-version-updater-maven-plugin-version>
 
         <surefire-version>3.5.1</surefire-version>
         <!--suppress UnresolvedMavenProperty -->
@@ -478,7 +478,7 @@
                     <plugin>
                         <groupId>org.simplify4u.plugins</groupId>
                         <artifactId>sign-maven-plugin</artifactId>
-                        <version>1.0.1</version>
+                        <version>1.1.0</version>
                         <executions>
                             <execution>
                                 <goals>
