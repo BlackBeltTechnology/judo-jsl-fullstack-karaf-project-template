@@ -32,16 +32,16 @@
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <src.dir>src/main</src.dir>
 
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
 
         <slf4j-version>2.0.16</slf4j-version>
         <log4j.configuration>log4j.properties</log4j.configuration>
 
-        <judo-generator-commons-version>1.0.0.20241127_150150_30b65e30_develop</judo-generator-commons-version>
-        <judo-meta-jsl-version>1.0.3.20250313_012736_9ca52b8c_develop</judo-meta-jsl-version>
-        <judo-tatami-jsl-version>1.1.4.20250603_042002_f66237f7_develop</judo-tatami-jsl-version>
-        <judo-version-updater-maven-plugin-version>1.0.0.20241127_151701_eca331a9_develop</judo-version-updater-maven-plugin-version>
+        <judo-generator-commons-version>1.0.0.20250604_005413_e4565e35_feature_JNG_6310_UpdateEpsilon</judo-generator-commons-version>
+        <judo-meta-jsl-version>1.0.3.20250604_200642_5668c8d9_feature_JNG_6310_UpdateEpsilon</judo-meta-jsl-version>
+        <judo-tatami-jsl-version>1.1.4.20250604_203755_ff6be6ac_feature_JNG_6310_UpdateEpsilon</judo-tatami-jsl-version>
+        <judo-version-updater-maven-plugin-version>1.0.0.20250604_120601_01ff8bb0_feature_JNG_6310_UpdateEpsilon</judo-version-updater-maven-plugin-version>
 
         <surefire-version>3.5.1</surefire-version>
         <!--suppress UnresolvedMavenProperty -->
@@ -478,7 +478,7 @@
                     <plugin>
                         <groupId>org.simplify4u.plugins</groupId>
                         <artifactId>sign-maven-plugin</artifactId>
-                        <version>1.0.1</version>
+                        <version>1.1.0</version>
                         <executions>
                             <execution>
                                 <goals>
