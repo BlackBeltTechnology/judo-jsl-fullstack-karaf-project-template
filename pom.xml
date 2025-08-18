@@ -40,7 +40,7 @@
 
         <judo-generator-commons-version>1.0.0.20250605_191430_179b355a_develop</judo-generator-commons-version>
         <judo-meta-jsl-version>1.0.3.20250818_013955_f4594b01_feature_JNG_6322_Minimiize_Karaf_Size</judo-meta-jsl-version>
-        <judo-tatami-jsl-version>1.1.4.20250815_042235_bcc3cc6d_develop</judo-tatami-jsl-version>
+        <judo-tatami-jsl-version>1.1.4.20250818_130818_7e4b5e07_feature_JNG_6322_Minimiize_Karaf_Size</judo-tatami-jsl-version>
         <judo-version-updater-maven-plugin-version>1.0.0.20250605_192037_ea4d463c_develop</judo-version-updater-maven-plugin-version>
 
         <surefire-version>3.5.1</surefire-version>
