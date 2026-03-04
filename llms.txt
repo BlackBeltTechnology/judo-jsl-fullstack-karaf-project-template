@@ -31,6 +31,12 @@ Key facts:
 - [judo-jsl-fullstack-karaf-project-template-root/src/main/resources/fullstack-project.yaml](judo-jsl-fullstack-karaf-project-template-root/src/main/resources/fullstack-project.yaml): Root module template manifest listing all root-level .hbs files
 - [judo-jsl-fullstack-karaf-project-template-application/src/main/resources/fullstack-project.yaml](judo-jsl-fullstack-karaf-project-template-application/src/main/resources/fullstack-project.yaml): Application module template manifest listing all application .hbs files
 
+## Depends on
+
+- [judo-meta-jsl](../../models/judo-meta-jsl): models/judo-meta-jsl
+- [judo-generator-commons](../../runtime/judo-generator-commons): runtime/judo-generator-commons
+- [judo-version-updater-maven-plugin](../../tools/judo-version-updater-maven-plugin): tools/judo-version-updater-maven-plugin
+
 ## Optional
 
 - [.github/workflows/build.yml](.github/workflows/build.yml): CI build pipeline
