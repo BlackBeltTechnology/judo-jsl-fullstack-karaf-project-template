@@ -1,0 +1,46 @@
+# JUDO JSL Fullstack Karaf Project Template
+
+> A Maven-based project template generator that produces complete fullstack applications for the JUDO platform, using Handlebars templates to generate modular project structures targeting Apache Karaf as the OSGi runtime.
+
+Key facts:
+- Java 21, Maven 3.9.4+ with Maven Wrapper
+- 4 modules: common (helpers), root (root templates), application (module templates), test
+- Handlebars template engine (.hbs files) driven by YAML manifests
+- 16+ boolean flags control conditional module generation (model, SDK, REST, frontend, Docker, Karaf, etc.)
+- All modules packaged as OSGi bundles for Apache Karaf deployment
+- Not a standalone application — consumed as a Maven dependency by `judo-jsl-generator-maven-plugin`
+- License: EPL-2.0 or GPL-2.0 WITH Classpath-exception-2.0
+
+## Docs
+
+- [README.md](README.md): Project overview, architecture diagram, usage example, and build commands
+- [AGENTS.md](AGENTS.md): Developer guide with directory structure, build commands, technology stack, and coding conventions
+- [CONTRIBUTING.md](CONTRIBUTING.md): Development setup and contribution guidelines
+- [.github/CIFLOW.md](.github/CIFLOW.md): CI/CD pipeline documentation with flow diagrams
+
+## Modules — Template Infrastructure
+
+- [judo-jsl-fullstack-karaf-project-template-common/pom.xml](judo-jsl-fullstack-karaf-project-template-common/pom.xml): Java helper classes for Handlebars rendering — JslProjectHelper (string transformations) and StoredVariableHelper (generation flags)
+- [judo-jsl-fullstack-karaf-project-template-root/pom.xml](judo-jsl-fullstack-karaf-project-template-root/pom.xml): Handlebars templates for the root-level generated project (parent POM with fragment includes, build scripts, configs)
+- [judo-jsl-fullstack-karaf-project-template-application/pom.xml](judo-jsl-fullstack-karaf-project-template-application/pom.xml): Templates for all application sub-modules (app, model, rest, sdk, frontend-react, docker, e2e, interceptors, karaf-features, keycloak-theme, schema, web-root)
+- [judo-jsl-fullstack-karaf-project-template-test/pom.xml](judo-jsl-fullstack-karaf-project-template-test/pom.xml): Integration tests that invoke the generator plugin with various parameter combinations
+
+## Modules — Template Manifests
+
+- [judo-jsl-fullstack-karaf-project-template-common/src/main/resources/fullstack-project.yaml](judo-jsl-fullstack-karaf-project-template-common/src/main/resources/fullstack-project.yaml): Common module template manifest
+- [judo-jsl-fullstack-karaf-project-template-root/src/main/resources/fullstack-project.yaml](judo-jsl-fullstack-karaf-project-template-root/src/main/resources/fullstack-project.yaml): Root module template manifest listing all root-level .hbs files
+- [judo-jsl-fullstack-karaf-project-template-application/src/main/resources/fullstack-project.yaml](judo-jsl-fullstack-karaf-project-template-application/src/main/resources/fullstack-project.yaml): Application module template manifest listing all application .hbs files
+
+## Depends on
+
+- [judo-meta-jsl](../../models/judo-meta-jsl): models/judo-meta-jsl
+- [judo-generator-commons](../../runtime/judo-generator-commons): runtime/judo-generator-commons
+- [judo-version-updater-maven-plugin](../../tools/judo-version-updater-maven-plugin): tools/judo-version-updater-maven-plugin
+
+## Optional
+
+- [.github/workflows/build.yml](.github/workflows/build.yml): CI build pipeline
+- [.github/workflows/release.yml](.github/workflows/release.yml): Release pipeline
+- [LICENSE.txt](LICENSE.txt): EPL-2.0 license text
+- [logback-test.xml](logback-test.xml): Test logging configuration
+- [pom.xml](pom.xml): Parent POM with all dependency versions, plugins, and 7 build profiles
