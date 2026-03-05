@@ -33,9 +33,9 @@ Key facts:
 
 ## Depends on
 
-- [judo-meta-jsl](../../models/judo-meta-jsl): models/judo-meta-jsl
-- [judo-generator-commons](../../runtime/judo-generator-commons): runtime/judo-generator-commons
-- [judo-version-updater-maven-plugin](../../tools/judo-version-updater-maven-plugin): tools/judo-version-updater-maven-plugin
+- [judo-meta-jsl](../../models/judo-meta-jsl): JSL language toolchain — grammar, parser, validator, code generator, and LSP servers
+- [judo-generator-commons](../../runtime/judo-generator-commons): Handlebars template-based code generation framework
+- [judo-version-updater-maven-plugin](../../tools/judo-version-updater-maven-plugin): Maven plugin resolving latest JUDO versions and scaffolding projects
 
 ## Optional
 
