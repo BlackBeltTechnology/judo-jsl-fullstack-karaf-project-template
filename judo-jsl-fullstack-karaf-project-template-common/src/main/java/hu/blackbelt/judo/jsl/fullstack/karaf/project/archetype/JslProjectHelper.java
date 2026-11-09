@@ -21,7 +21,7 @@ package hu.blackbelt.judo.jsl.fullstack.karaf.project.archetype;
  */
 
 import hu.blackbelt.judo.meta.jsl.jsldsl.ModelDeclaration;
-import com.github.jknack.handlebars.internal.lang3.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import hu.blackbelt.judo.generator.commons.StaticMethodValueResolver;
 import hu.blackbelt.judo.generator.commons.annotations.TemplateHelper;
 import hu.blackbelt.judo.meta.jsl.jsldsl.TransferDeclaration;
